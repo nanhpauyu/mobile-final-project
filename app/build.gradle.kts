@@ -31,11 +31,16 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "11"
+//    kotlinOptions {
+//        jvmTarget = "11"
+//    }
+    kotlin {
+        compilerOptions {
+            optIn.add("kotlin.RequiresOptIn")
+        }
     }
     buildFeatures {
         compose = true
@@ -43,6 +48,16 @@ android {
 }
 
 dependencies {
+    implementation("androidx.compose.material:material-icons-extended-android:1.7.8")
+    //A type-safe HTTP client for Android and Java.
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    //A Retrofit Converter which uses Gson for serialization
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
+    //An image loading library for Android and Compose Multiplatform.
+    implementation("io.coil-kt.coil3:coil-compose:3.3.0")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
