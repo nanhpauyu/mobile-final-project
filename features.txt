@@ -1,0 +1,46 @@
+
+
+first GitHub
+add dependency
+
+
+
+
+
+
+
+core
+-model
+-ai
+-database
+  -dao
+features
+-auth
+  -repo interface
+  -data implementation
+    -remote
+    -local
+  -ui
+    -screen.kt
+    -state.kt
+    -viewmodel.kt
+-user
+ -repo
+ -data
+   -remote
+   -local
+-post
+ -repo
+ -data
+   -remote
+   -local
+-comment
+ -repo
+ -data
+   -remote
+   -local
+ -ui
+   -screen.kt
+   -state.kt
+   -viewmodel.kt
+
