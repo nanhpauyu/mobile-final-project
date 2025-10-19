@@ -26,7 +26,7 @@ import com.example.mobilefinalproject.core.network.ApiProvider
 import com.example.mobilefinalproject.feature.auth.data.repository.AuthRepositoryImpl
 
 @Composable
-fun RegisterScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier) {
     val authViewModel: AuthViewModel = viewModel {
         AuthViewModel(AuthRepositoryImpl(ApiProvider.authService))
     }
@@ -41,14 +41,9 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
             Text(
-                text="Register",
+                text="Login",
                 fontWeight = FontWeight.Bold,
                 fontSize = 24.sp,
-            )
-            OutlinedTextField(
-                value = authUiState.username,
-                onValueChange = authViewModel::onUserNameChange,
-                label = { Text("Username") },
             )
             OutlinedTextField(
                 value = authUiState.email,
@@ -60,15 +55,17 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
                 onValueChange = authViewModel::onPasswordChange,
                 label = { Text("Password") },
             )
-            Button(onClick = authViewModel::register) {
-                Text("Register")
+            Button(
+                onClick = authViewModel::login
+            ) {
+                Text("Login")
             }
             Text(
                 modifier = Modifier
                     .clickable {
-                        // redirect to login screen
+                        // redirect to register screen
                     },
-                text = "Login",
+                text = "Register",
                 color = Color.Blue,
                 textDecoration = TextDecoration.Underline
             )
@@ -78,6 +75,6 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun RegisterScreenPreview() {
-    RegisterScreen()
+fun LoginScreenPreview() {
+    LoginScreen()
 }
