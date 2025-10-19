@@ -37,9 +37,9 @@ class AuthViewModel(
                     it.copy(isLogin = true, isLoading = false)
                 }
             }
-            .onFailure {
+            .onFailure { err ->
                 _uiState.update {
-                    it.copy(errorMessage = it.errorMessage, isLoading = false)
+                    it.copy(errorMessage = err.message, isLoading = false)
                 }
             }
         }
@@ -62,9 +62,9 @@ class AuthViewModel(
                     it.copy(isLogin = true, isLoading = false)
                 }
             }
-            .onFailure {
+            .onFailure { err ->
                 _uiState.update {
-                    it.copy(errorMessage = it.errorMessage, isLoading = false)
+                    it.copy(errorMessage = err.message, isLoading = false)
                 }
             }
         }

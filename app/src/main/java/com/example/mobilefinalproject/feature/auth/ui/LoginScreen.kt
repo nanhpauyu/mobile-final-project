@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -43,7 +44,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             Text(
                 text="Login",
                 fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
+                fontSize = MaterialTheme.typography.titleLarge.fontSize
             )
             OutlinedTextField(
                 value = authUiState.email,

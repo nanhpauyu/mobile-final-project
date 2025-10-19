@@ -1,6 +1,7 @@
 package com.example.mobilefinalproject.core.network
 
 import com.example.mobilefinalproject.feature.auth.data.api.AuthService
+import com.example.mobilefinalproject.feature.profile.data.api.ProfileService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.jvm.java
@@ -17,5 +18,9 @@ object ApiProvider {
 
     val authService: AuthService by lazy {
         retrofit.create(AuthService::class.java)
+    }
+
+    val profileService: ProfileService by lazy {
+        retrofit.create(ProfileService::class.java)
     }
 }
