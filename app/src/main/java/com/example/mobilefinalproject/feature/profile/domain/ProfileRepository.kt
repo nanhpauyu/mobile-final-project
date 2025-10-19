@@ -1,7 +1,7 @@
 package com.example.mobilefinalproject.feature.profile.domain
 
-import com.example.mobilefinalproject.core.network.dto.ProfileRequestDto
-import com.example.mobilefinalproject.core.network.dto.ProfileResponseDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileResponseDto
 
 interface ProfileRepository {
     suspend fun me(): Result<ProfileResponseDto>

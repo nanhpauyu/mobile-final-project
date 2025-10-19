@@ -2,8 +2,8 @@ package com.example.mobilefinalproject.feature.auth.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobilefinalproject.core.network.dto.AuthLoginDto
-import com.example.mobilefinalproject.core.network.dto.AuthRegisterDto
+import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
+import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
 import com.example.mobilefinalproject.feature.auth.domain.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow

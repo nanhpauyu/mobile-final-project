@@ -2,7 +2,7 @@ package com.example.mobilefinalproject.feature.profile.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobilefinalproject.core.network.dto.ProfileRequestDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
 import com.example.mobilefinalproject.feature.profile.domain.ProfileRepository
 import com.example.mobilefinalproject.feature.profile.ui.state.EditProfileUiState
 import com.example.mobilefinalproject.feature.profile.ui.state.ProfileUiState

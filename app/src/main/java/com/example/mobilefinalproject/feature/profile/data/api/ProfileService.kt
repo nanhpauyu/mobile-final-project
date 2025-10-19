@@ -1,7 +1,7 @@
 package com.example.mobilefinalproject.feature.profile.data.api
 
-import com.example.mobilefinalproject.core.network.dto.ProfileRequestDto
-import com.example.mobilefinalproject.core.network.dto.ProfileResponseDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileResponseDto
 import retrofit2.http.GET
 import retrofit2.http.POST
 

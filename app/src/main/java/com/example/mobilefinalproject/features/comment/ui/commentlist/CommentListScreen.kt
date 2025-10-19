@@ -41,7 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mobilefinalproject.core.network.APIProvider
+import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.comment.data.remote.api.CommentAPIService
 import com.example.mobilefinalproject.features.comment.data.repository.CommentRepositoryImpl
 
@@ -55,7 +55,7 @@ fun CommentListScreen(
     username: String
 ) {
     val commentAPIService: CommentAPIService = remember {
-        APIProvider.commentAPIService
+        ApiProvider.commentAPIService
     }
     val commentListViewModel: CommentListViewModel = viewModel {
         CommentListViewModel(

@@ -26,7 +26,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.ai.data.repository.GenerativeModelRepositoryImpl
 import com.example.mobilefinalproject.core.ai.model.GenerativeModelService
-import com.example.mobilefinalproject.core.network.APIProvider
+import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
 
 @Composable
@@ -44,7 +44,7 @@ fun PostScreen(modifier: Modifier = Modifier) {
                         model = GenerativeModelService.getModel()
                     ),
                     postRepository = PostRepositoryImpl(
-                        postAPIService = APIProvider.postAPIService
+                        postAPIService = ApiProvider.postAPIService
                     )
                 )
             }

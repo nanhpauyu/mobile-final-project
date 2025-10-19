@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.core.network.dto
+package com.example.mobilefinalproject.core.data.network.dto
 
 data class AuthLoginDto(
     val email: String,

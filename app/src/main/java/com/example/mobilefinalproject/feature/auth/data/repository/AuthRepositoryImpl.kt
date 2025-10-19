@@ -1,7 +1,7 @@
 package com.example.mobilefinalproject.feature.auth.data.repository
 
-import com.example.mobilefinalproject.core.network.dto.AuthLoginDto
-import com.example.mobilefinalproject.core.network.dto.AuthRegisterDto
+import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
+import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
 import com.example.mobilefinalproject.feature.auth.data.api.AuthService
 import com.example.mobilefinalproject.feature.auth.domain.AuthRepository
 

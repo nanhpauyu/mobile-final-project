@@ -1,7 +1,7 @@
 package com.example.mobilefinalproject.feature.profile.data.repository
 
-import com.example.mobilefinalproject.core.network.dto.ProfileRequestDto
-import com.example.mobilefinalproject.core.network.dto.ProfileResponseDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
+import com.example.mobilefinalproject.core.data.network.dto.ProfileResponseDto
 import com.example.mobilefinalproject.feature.profile.data.api.ProfileService
 import com.example.mobilefinalproject.feature.profile.domain.ProfileRepository
 

@@ -31,14 +31,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mobilefinalproject.core.network.APIProvider
+import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
 
 @Composable
 fun PostListScreen(modifier: Modifier = Modifier ) {
     val postAPIService: PostAPIService = remember {
-        APIProvider.postAPIService
+        ApiProvider.postAPIService
     }
     val postListViewModel: PostListViewModel = viewModel {
         PostListViewModel(PostRepositoryImpl(postAPIService))

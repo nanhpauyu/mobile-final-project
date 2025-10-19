@@ -3,7 +3,6 @@ package com.example.mobilefinalproject.feature.auth.ui
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -20,10 +19,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.mobilefinalproject.core.network.ApiProvider
+import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.feature.auth.data.repository.AuthRepositoryImpl
 
 @Composable
