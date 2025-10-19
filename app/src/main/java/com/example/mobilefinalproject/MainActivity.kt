@@ -4,13 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.mobilefinalproject.features.comment.ui.commentlist.CommentListScreen
 import com.example.mobilefinalproject.ui.theme.MobileFinalProjectTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,29 +13,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MobileFinalProjectTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+//                PostScreen()
+//                PostListScreen()
+                CommentListScreen(
+                    postId ="38ff4ac6-22f8-4c8d-93b4-f5865cbf2ff7",
+                    post="Logo Is Here!",
+                    username = "null"
+                )
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MobileFinalProjectTheme {
-        Greeting("Android")
     }
 }
