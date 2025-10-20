@@ -25,7 +25,7 @@ import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.auth.data.repository.AuthRepositoryImpl
 
 @Composable
-fun RegisterScreen(modifier: Modifier = Modifier) {
+fun RegisterScreen(modifier: Modifier = Modifier, onLoginClick: Any ) {
     val authViewModel: AuthViewModel = viewModel {
         AuthViewModel(AuthRepositoryImpl(ApiProvider.authService))
     }

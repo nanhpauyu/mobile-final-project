@@ -34,9 +34,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
+import com.example.mobilefinalproject.nav.CommentList
 
 @Composable
-fun PostListScreen(modifier: Modifier = Modifier ) {
+fun PostListScreen(
+    modifier: Modifier = Modifier,
+    onCommentClick: (CommentList) -> Unit
+) {
     val postAPIService: PostAPIService = remember {
         ApiProvider.postAPIService
     }
@@ -119,7 +123,13 @@ fun PostListScreen(modifier: Modifier = Modifier ) {
                                 shape = RoundedCornerShape(4.dp)
                             )
                             .clickable {
-
+                                onCommentClick(
+                                    CommentList(
+                                        postId = it.id,
+                                        username = it.username,
+                                        post = it.text
+                                    )
+                                )
                             },
                         contentAlignment = Alignment.TopStart
                     ) {
@@ -168,5 +178,5 @@ fun PostListScreen(modifier: Modifier = Modifier ) {
 )
 @Composable
 fun PostListScreenPreview(modifier: Modifier = Modifier) {
-    PostListScreen()
+//    PostListScreen(modifier, null)
 }

@@ -30,7 +30,7 @@ import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
 
 @Composable
-fun PostScreen(modifier: Modifier = Modifier) {
+fun PostScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
     Scaffold { innerPadding ->
         Column(
             modifier = modifier
@@ -133,7 +133,6 @@ fun PostScreen(modifier: Modifier = Modifier) {
                     Button(
                         onClick = {
                             postCreationViewModel.onAIModifyPostSubmit()
-                            /* Handle click */
                         },
                         // Remove .fillMaxWidth() from the button
                         // Optional: Add padding here if needed
@@ -164,5 +163,5 @@ fun PostScreen(modifier: Modifier = Modifier) {
 )
 @Composable
 fun PostScreenPreview(modifier: Modifier = Modifier) {
-    PostScreen()
+//    PostScreen()
 }

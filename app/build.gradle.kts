@@ -64,6 +64,11 @@ dependencies {
     implementation("com.google.firebase:firebase-ai")
     implementation("androidx.compose.material:material-icons-extended-android:1.7.8")
 
+    implementation("androidx.navigation3:navigation3-runtime:1.0.0-alpha10")
+    implementation("androidx.navigation3:navigation3-ui-android:1.0.0-alpha10")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-navigation3:2.10.0-alpha04")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
