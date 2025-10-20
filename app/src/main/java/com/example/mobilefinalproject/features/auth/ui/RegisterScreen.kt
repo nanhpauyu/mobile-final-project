@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.data.network.ApiProvider
-import com.example.mobilefinalproject.feature.auth.data.repository.AuthRepositoryImpl
+import com.example.mobilefinalproject.features.auth.data.repository.AuthRepositoryImpl
 
 @Composable
 fun RegisterScreen(modifier: Modifier = Modifier) {

@@ -34,9 +34,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.core.viewmodel.AppViewModelProvider
-import com.example.mobilefinalproject.feature.profile.data.repository.ProfileRepositoryImpl
-import com.example.mobilefinalproject.feature.profile.ui.state.EditProfileUiState
-import com.example.mobilefinalproject.feature.profile.ui.viewmodel.ProfileViewModel
+import com.example.mobilefinalproject.features.profile.data.repository.ProfileRepositoryImpl
+import com.example.mobilefinalproject.features.profile.ui.state.EditProfileUiState
+import com.example.mobilefinalproject.features.profile.ui.viewmodel.ProfileViewModel
 
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier) {

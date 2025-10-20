@@ -1,12 +1,13 @@
 package com.example.mobilefinalproject.core.data.network
 
-import com.example.mobilefinalproject.feature.auth.data.api.AuthService
-import com.example.mobilefinalproject.feature.profile.data.api.ProfileService
+import com.example.mobilefinalproject.features.auth.data.api.AuthService
+import com.example.mobilefinalproject.features.profile.data.api.ProfileService
 import com.example.mobilefinalproject.features.comment.data.remote.api.CommentAPIService
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.jvm.java
+import androidx.compose.runtime.getValue
 
 object ApiProvider {
     private val retrofit: Retrofit by lazy {

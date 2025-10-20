@@ -27,7 +27,7 @@ import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.core.model.CurrentUser
 import com.example.mobilefinalproject.core.viewmodel.AppViewModelProvider
 import com.example.mobilefinalproject.core.viewmodel.CurrentUserViewModel
-import com.example.mobilefinalproject.feature.auth.data.repository.AuthRepositoryImpl
+import com.example.mobilefinalproject.features.auth.data.repository.AuthRepositoryImpl
 
 @Composable
 fun LoginScreen(modifier: Modifier = Modifier) {

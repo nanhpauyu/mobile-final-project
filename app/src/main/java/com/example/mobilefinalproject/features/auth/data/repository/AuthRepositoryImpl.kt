@@ -2,8 +2,8 @@ package com.example.mobilefinalproject.features.auth.data.repository
 
 import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
 import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
-import com.example.mobilefinalproject.feature.auth.data.api.AuthService
-import com.example.mobilefinalproject.feature.auth.domain.AuthRepository
+import com.example.mobilefinalproject.features.auth.data.api.AuthService
+import com.example.mobilefinalproject.features.auth.domain.AuthRepository
 
 class AuthRepositoryImpl(
     private val authService: AuthService

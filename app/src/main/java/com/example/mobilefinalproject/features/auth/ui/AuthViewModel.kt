@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
 import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
-import com.example.mobilefinalproject.feature.auth.domain.AuthRepository
+import com.example.mobilefinalproject.features.auth.domain.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
