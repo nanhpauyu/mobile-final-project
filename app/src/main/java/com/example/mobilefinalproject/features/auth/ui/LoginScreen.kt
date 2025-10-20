@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.feature.auth.ui
+package com.example.mobilefinalproject.features.auth.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -11,10 +11,12 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,14 +24,33 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.data.network.ApiProvider
+import com.example.mobilefinalproject.core.model.CurrentUser
+import com.example.mobilefinalproject.core.viewmodel.AppViewModelProvider
+import com.example.mobilefinalproject.core.viewmodel.CurrentUserViewModel
 import com.example.mobilefinalproject.feature.auth.data.repository.AuthRepositoryImpl
 
 @Composable
-fun RegisterScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(modifier: Modifier = Modifier) {
     val authViewModel: AuthViewModel = viewModel {
         AuthViewModel(AuthRepositoryImpl(ApiProvider.authService))
     }
     val authUiState by authViewModel.uiState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
+    val currentUserViewModel: CurrentUserViewModel = AppViewModelProvider.getCurrentUserViewModel(context)
+
+    LaunchedEffect(authUiState.isLogin) {
+        // TODO
+//        currentUserViewModel.saveCurrentUser(
+//            CurrentUser(
+//                id = authUiState.id,
+//                username = authUiState.username,
+//                email = authUiState.email,
+//                bio = authUiState.bio,
+//                accessToken = authUiState.accessToken
+//            )
+//        )
+    }
 
     Scaffold { innerPadding ->
         Column (
@@ -40,15 +61,9 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ){
             Text(
-                text="Register",
+                text="Login",
                 fontWeight = FontWeight.Bold,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
-
-            )
-            OutlinedTextField(
-                value = authUiState.username,
-                onValueChange = authViewModel::onUserNameChange,
-                label = { Text("Username") },
+                fontSize = MaterialTheme.typography.titleLarge.fontSize
             )
             OutlinedTextField(
                 value = authUiState.email,
@@ -60,15 +75,17 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
                 onValueChange = authViewModel::onPasswordChange,
                 label = { Text("Password") },
             )
-            Button(onClick = authViewModel::register) {
-                Text("Register")
+            Button(
+                onClick = authViewModel::login
+            ) {
+                Text("Login")
             }
             Text(
                 modifier = Modifier
                     .clickable {
-                        // redirect to login screen
+                        // redirect to register screen
                     },
-                text = "Login",
+                text = "Register",
                 color = Color.Blue,
                 textDecoration = TextDecoration.Underline
             )
@@ -78,6 +95,6 @@ fun RegisterScreen(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun RegisterScreenPreview() {
-    RegisterScreen()
+fun LoginScreenPreview() {
+    LoginScreen()
 }

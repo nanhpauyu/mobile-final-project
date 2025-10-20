@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.feature.auth.ui
+package com.example.mobilefinalproject.features.auth.ui
 
 data class AuthUiState(
     val username: String = "",

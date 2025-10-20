@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.feature.profile.ui.screen
+package com.example.mobilefinalproject.features.profile.ui.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer

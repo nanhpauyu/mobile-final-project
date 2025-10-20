@@ -1,9 +1,8 @@
-package com.example.mobilefinalproject.feature.profile.ui.state
+package com.example.mobilefinalproject.features.profile.ui.state
 
-data class ProfileUiState(
+data class EditProfileUiState (
     val id: Long = 0,
     val username: String = "",
-    val email: String = "",
     val bio: String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,

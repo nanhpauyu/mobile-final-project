@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.feature.profile.data.api
+package com.example.mobilefinalproject.features.profile.data.api
 
 import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
 import com.example.mobilefinalproject.core.data.network.dto.ProfileResponseDto

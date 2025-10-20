@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.feature.profile.ui.viewmodel
+package com.example.mobilefinalproject.features.profile.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

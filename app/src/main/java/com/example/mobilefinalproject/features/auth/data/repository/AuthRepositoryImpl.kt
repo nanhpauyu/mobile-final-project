@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.feature.auth.data.repository
+package com.example.mobilefinalproject.features.auth.data.repository
 
 import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
 import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
