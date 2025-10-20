@@ -200,6 +200,7 @@ fun CommentListScreen(
                         onClick = {
                             openDialog.value = false
                             commentCreateViewModel.createComment()
+                            commentListViewModel.getComments(postId = postId)
                         },
                         modifier = Modifier.align(Alignment.End)
                     ) {

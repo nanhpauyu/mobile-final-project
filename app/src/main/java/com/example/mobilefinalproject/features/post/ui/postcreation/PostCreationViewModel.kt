@@ -50,14 +50,22 @@ class PostCreationViewModel(
                 postRepository.createPost(PostRequestDto(_postCreationUIState.value.post, ""))
             }
             result.onSuccess {
-                _postCreationUIState.update { PostCreationUIState.Empty }
+                _postCreationUIState.update {
+                    it.copy(
+                        isLoading = false,
+                        errorMessage = null,
+                        onSuccessUpload =true
+                    )
+
+                }
                 _aiPostCreationUIState.update { AIPostCreationUIState.Empty }
             }
                 .onFailure { error ->
                     _postCreationUIState.update {
                         it.copy(
                             isLoading = false,
-                            errorMessage = error.message
+                            errorMessage = error.message,
+
                         )
                     }
                 }
@@ -98,7 +106,7 @@ class PostCreationViewModel(
                     it.copy(
                         isLoading = false,
                         post = result,
-                        errorMessage = null
+                        errorMessage = null,
                     )
                 }
             }

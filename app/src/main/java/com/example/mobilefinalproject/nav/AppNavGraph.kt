@@ -19,14 +19,14 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
 
     NavDisplay(
         backStack = backStack,
-        onBack = {backStack.removeLastOrNull()},
+        onBack = { backStack.removeLastOrNull() },
         entryDecorators = listOf(
             rememberSavedStateNavEntryDecorator(),
             rememberViewModelStoreNavEntryDecorator(),
         ),
 
         // android DSL
-        entryProvider = entryProvider{
+        entryProvider = entryProvider {
             entry<Register> {
                 RegisterScreen(
                     modifier = modifier,
@@ -40,11 +40,20 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                     modifier = modifier,
                 )
             }
-            entry<PostList>  {
+            entry<PostList> {
                 PostListScreen(
                     modifier = modifier,
                     onCommentClick = { commentList ->
                         backStack.add(commentList)
+                    },
+                    onCreateClick = {
+                        backStack.add(AddPost)
+                    },
+                    onLogoutClick = {
+
+                    },
+                    onProfileClick = {
+
                     }
                 )
             }

@@ -34,12 +34,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
+import com.example.mobilefinalproject.nav.AddPost
 import com.example.mobilefinalproject.nav.CommentList
 
 @Composable
 fun PostListScreen(
     modifier: Modifier = Modifier,
-    onCommentClick: (CommentList) -> Unit
+    onCommentClick: (CommentList) -> Unit,
+    onCreateClick: (AddPost) -> Unit,
+    // need to edit
+    onProfileClick:() ->Unit,
+    onLogoutClick:() ->Unit
 ) {
     val postAPIService: PostAPIService = remember {
         ApiProvider.postAPIService
@@ -50,7 +55,6 @@ fun PostListScreen(
     val postListUIState by postListViewModel.postListUIState.collectAsStateWithLifecycle()
 
     val posts = postListUIState.posts?.data
-//    Log.i("data",posts.toString())
 
     Scaffold { innerPadding ->
         Column(
@@ -68,7 +72,8 @@ fun PostListScreen(
                 TextButton(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-
+                        TODO("Implement logout logic")
+//                        onLogoutClick()
                     }
                 ) {
                     Text(
@@ -78,7 +83,8 @@ fun PostListScreen(
                 TextButton(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-
+                        TODO("Implement profile navigation")
+//                        onProfileClick()
                     }
                 ) {
                     Text(
@@ -97,7 +103,7 @@ fun PostListScreen(
                         shape = RoundedCornerShape(4.dp) // Optional: rounded corners
                     )
                     .clickable {
-
+                        onCreateClick(AddPost)
                     },
                 contentAlignment = Alignment.CenterStart // Changed to CenterStart for left alignment
             ) {
