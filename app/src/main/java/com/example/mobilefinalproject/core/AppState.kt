@@ -1,4 +1,4 @@
-package com.example.mobilefinalproject.core.viewmodel
+package com.example.mobilefinalproject.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CurrentUserViewModel(
+class AppState(
     private val currentUserRepository: CurrentUserRepository
 ): ViewModel() {
     private val _currentUser = MutableStateFlow<CurrentUser?>(null)
@@ -18,9 +18,7 @@ class CurrentUserViewModel(
     init {
         viewModelScope.launch {
             currentUserRepository.getUserCredentials().collect { user ->
-                if (user != null) {
-                    _currentUser.update { user }
-                }
+                _currentUser.update { user }
             }
         }
     }

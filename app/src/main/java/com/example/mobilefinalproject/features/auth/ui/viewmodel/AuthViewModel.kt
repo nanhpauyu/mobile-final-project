@@ -1,10 +1,11 @@
-package com.example.mobilefinalproject.features.auth.ui
+package com.example.mobilefinalproject.features.auth.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
 import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
 import com.example.mobilefinalproject.features.auth.domain.AuthRepository
+import com.example.mobilefinalproject.features.auth.ui.state.AuthUiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -27,14 +28,17 @@ class AuthViewModel(
             _uiState.update { it.copy(isLoading = true) }
 
             withContext(Dispatchers.IO) {
-                authRepository.login(AuthLoginDto(
-                    email = _uiState.value.email,
-                    password = _uiState.value.password
-                ))
+                authRepository.login(
+                    AuthLoginDto(
+                        email = _uiState.value.email,
+                        password = _uiState.value.password
+                    )
+                )
             }
             .onSuccess {
                 _uiState.update {
-                    it.copy(isLogin = true, isLoading = false)
+                    // TODO: user detail
+                    it.copy(userDetail = null, isLoading = false)
                 }
             }
             .onFailure { err ->
@@ -59,7 +63,8 @@ class AuthViewModel(
             }
             .onSuccess {
                 _uiState.update {
-                    it.copy(isLogin = true, isLoading = false)
+                    // TODO: user detail
+                    it.copy(userDetail = null, isLoading = false)
                 }
             }
             .onFailure { err ->
