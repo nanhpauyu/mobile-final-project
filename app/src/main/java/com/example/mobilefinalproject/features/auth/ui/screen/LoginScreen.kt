@@ -36,12 +36,12 @@ fun LoginScreen(
     onRegisterClick: () -> Unit,
     onLoginSuccess: () -> Unit,
     ) {
+    val context = LocalContext.current
     val authViewModel: AuthViewModel = viewModel {
-        AuthViewModel(AuthRepositoryImpl(ApiProvider.authService))
+        AuthViewModel(AuthRepositoryImpl(ApiProvider.getAuthService(context)))
     }
     val authUiState by authViewModel.uiState.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
     val appState: AppState = AppStateProvider.getAppState(context)
     val currentUser by appState.currentUser.collectAsStateWithLifecycle()
 

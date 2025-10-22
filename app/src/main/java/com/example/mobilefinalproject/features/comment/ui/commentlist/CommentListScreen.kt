@@ -36,6 +36,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,8 +55,9 @@ fun CommentListScreen(
     post: String,
     username: String
 ) {
+    val context = LocalContext.current
     val commentAPIService: CommentAPIService = remember {
-        ApiProvider.commentAPIService
+        ApiProvider.getCommentAPIService(context)
     }
     val commentListViewModel: CommentListViewModel = viewModel {
         CommentListViewModel(

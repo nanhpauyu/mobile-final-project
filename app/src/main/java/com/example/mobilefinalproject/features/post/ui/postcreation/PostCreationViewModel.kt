@@ -16,27 +16,27 @@ import kotlinx.coroutines.withContext
 class PostCreationViewModel(
     private val generativeModelRepository: GenerativeModelRepository,
     private val postRepository: PostRepository,
-    private val currentUserRepository: CurrentUserRepository
+//    private val currentUserRepository: CurrentUserRepository
 ) : ViewModel() {
     private val _postCreationUIState = MutableStateFlow(PostCreationUIState())
     val postCreationUIState = _postCreationUIState.asStateFlow()
     private val _aiPostCreationUIState = MutableStateFlow(AIPostCreationUIState())
     val aiPostCreationUIState = _aiPostCreationUIState.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            currentUserRepository.getUserCredentials().collect { user ->
-                if (user != null) {
-                    _postCreationUIState.update{
-                        it.copy(
-                            username = user.username,
-                            userid = user.id.toString()
-                        )
-                    }
-                }
-            }
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            currentUserRepository.getUserCredentials().collect { user ->
+//                if (user != null) {
+//                    _postCreationUIState.update{
+//                        it.copy(
+//                            username = user.username,
+//                            userid = user.id.toString()
+//                        )
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     fun onPostChange(post: String) {
         _postCreationUIState.update {

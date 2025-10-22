@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -46,8 +47,9 @@ fun PostListScreen(
     onProfileClick:() ->Unit,
     onLogoutClick:() ->Unit
 ) {
+    val context = LocalContext.current
     val postAPIService: PostAPIService = remember {
-        ApiProvider.postAPIService
+        ApiProvider.getPostAPIService(context)
     }
     val postListViewModel: PostListViewModel = viewModel {
         PostListViewModel(PostRepositoryImpl(postAPIService))

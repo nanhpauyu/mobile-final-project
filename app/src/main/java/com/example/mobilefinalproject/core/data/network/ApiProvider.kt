@@ -1,37 +1,70 @@
 package com.example.mobilefinalproject.core.data.network
 
+import android.content.Context
 import com.example.mobilefinalproject.features.auth.data.api.AuthService
 import com.example.mobilefinalproject.features.comment.data.remote.api.CommentAPIService
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
 import com.example.mobilefinalproject.features.profile.data.api.ProfileService
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiProvider {
-    private val retrofit: Retrofit by lazy {
-        Retrofit.Builder()
-//            .baseUrl("http://localhost:8080/api/v1/")
-//            .baseUrl("http://172.17.141.86:8080/api/v1/")
-//            .baseUrl("https://2a362ebae9b9.ngrok-free.app/api/v1/")
-//            .baseUrl("https://biursite-6z6n.onrender.com/api/")
-            .baseUrl("http://localhost:8080/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    private var retrofit: Retrofit? = null
+    private fun getRetrofit(context: Context): Retrofit {
+        return retrofit ?: synchronized(this) {
+            if (retrofit == null) {
+                val client = OkHttpClient.Builder()
+                    .addInterceptor(AuthInterceptor(context))
+                    .build()
+
+                retrofit = Retrofit.Builder()
+                    .baseUrl("http://localhost:8080/")
+                    .client(client)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            }
+            retrofit!!
+        }
     }
 
-    val authService: AuthService by lazy {
-        retrofit.create(AuthService::class.java)
+    private var authService: AuthService? = null
+    fun getAuthService(context: Context): AuthService {
+        return authService ?: synchronized(this) {
+           if (authService == null) {
+               authService = getRetrofit(context).create(AuthService::class.java)
+           }
+           authService!!
+        }
     }
 
-    val profileService: ProfileService by lazy {
-        retrofit.create(ProfileService::class.java)
+    private var profileService: ProfileService? = null
+    fun getProfileService(context: Context): ProfileService {
+        return profileService ?: synchronized(this) {
+            if (profileService == null) {
+                profileService = getRetrofit(context).create(ProfileService::class.java)
+            }
+            profileService!!
+        }
     }
 
-    val postAPIService: PostAPIService by lazy {
-        retrofit.create(PostAPIService::class.java)
+    private var postAPIService: PostAPIService? = null
+    fun getPostAPIService(context: Context): PostAPIService {
+        return postAPIService ?: synchronized(this) {
+            if (postAPIService == null) {
+                postAPIService = getRetrofit(context).create(PostAPIService::class.java)
+            }
+            postAPIService!!
+        }
     }
 
-    val commentAPIService: CommentAPIService by lazy {
-        retrofit.create(CommentAPIService::class.java)
+    private var commentAPIService: CommentAPIService? = null
+    fun getCommentAPIService(context: Context): CommentAPIService {
+        return commentAPIService ?: synchronized(this) {
+            if (commentAPIService == null) {
+                commentAPIService = getRetrofit(context).create(CommentAPIService::class.java)
+            }
+            commentAPIService!!
+        }
     }
 }

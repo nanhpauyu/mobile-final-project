@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,6 +33,7 @@ import com.example.mobilefinalproject.features.post.data.repository.PostReposito
 
 @Composable
 fun PostScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
+    val context = LocalContext.current
     Scaffold { innerPadding ->
         Column(
             modifier = modifier
@@ -45,7 +47,7 @@ fun PostScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
                         model = GenerativeModelService.getModel()
                     ),
                     postRepository = PostRepositoryImpl(
-                        postAPIService = ApiProvider.postAPIService
+                        postAPIService = ApiProvider.getPostAPIService(context)
                     )
                 )
             }

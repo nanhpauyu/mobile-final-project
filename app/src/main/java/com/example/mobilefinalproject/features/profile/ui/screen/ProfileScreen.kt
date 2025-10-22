@@ -42,13 +42,13 @@ import com.example.mobilefinalproject.features.profile.ui.viewmodel.ProfileViewM
 
 @Composable
 fun ProfileScreen(modifier: Modifier = Modifier, userId: Long? = null) {
+    val context = LocalContext.current
     val profileViewModel = viewModel {
-        ProfileViewModel(ProfileRepositoryImpl(ApiProvider.profileService))
+        ProfileViewModel(ProfileRepositoryImpl(ApiProvider.getProfileService(context)))
     }
     val profileUiState by profileViewModel.profileUiState.collectAsStateWithLifecycle()
     val editProfileUiState by profileViewModel.editProfileUiState.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
     val appState: AppState = AppStateProvider.getAppState(context)
     val currentUser by appState.currentUser.collectAsStateWithLifecycle()
 
