@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.data.network.ApiProvider
-import com.example.mobilefinalproject.core.viewmodel.AppViewModelProvider
+import com.example.mobilefinalproject.core.viewmodel.AppStateProvider
 import com.example.mobilefinalproject.features.profile.data.repository.ProfileRepositoryImpl
 import com.example.mobilefinalproject.features.profile.ui.state.EditProfileUiState
 import com.example.mobilefinalproject.features.profile.ui.viewmodel.ProfileViewModel
@@ -47,7 +47,7 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
     val editProfileUiState by profileViewModel.editProfileUiState.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
-    val currentUserViewModel = AppViewModelProvider.getCurrentUserViewModel(context)
+    val currentUserViewModel = AppStateProvider.getCurrentUserViewModel(context)
     val currentUser by currentUserViewModel.currentUser.collectAsStateWithLifecycle()
 
     val editDialog = rememberSaveable { mutableStateOf(false) }
