@@ -12,6 +12,7 @@ import com.example.mobilefinalproject.features.auth.ui.screen.RegisterScreen
 import com.example.mobilefinalproject.features.comment.ui.commentlist.CommentListScreen
 import com.example.mobilefinalproject.features.post.ui.postcreation.PostScreen
 import com.example.mobilefinalproject.features.post.ui.postlist.PostListScreen
+import com.example.mobilefinalproject.features.profile.ui.screen.ProfileScreen
 
 @Composable
 fun AppNavGraph(modifier: Modifier = Modifier) {
@@ -51,6 +52,12 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                         backStack.clear()
                         backStack.add(PostList)
                     }
+                )
+            }
+            entry<Profile> {
+                ProfileScreen(
+                    modifier = modifier,
+                    userId = it.id,
                 )
             }
             entry<PostList> {
