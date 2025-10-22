@@ -1,6 +1,6 @@
 package com.example.mobilefinalproject.features.post.data.remote.dto.response
 
 data class PostListResponseDto(
-    val success: Boolean,
+    val status: String,
     val data:List<PostResponseDto>,
 )

@@ -3,6 +3,7 @@ package com.example.mobilefinalproject.features.post.ui.postcreation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilefinalproject.core.ai.repository.GenerativeModelRepository
+import com.example.mobilefinalproject.core.domain.CurrentUserRepository
 import com.example.mobilefinalproject.features.post.data.remote.dto.request.PostRequestDto
 import com.example.mobilefinalproject.features.post.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,12 +15,28 @@ import kotlinx.coroutines.withContext
 
 class PostCreationViewModel(
     private val generativeModelRepository: GenerativeModelRepository,
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val currentUserRepository: CurrentUserRepository
 ) : ViewModel() {
     private val _postCreationUIState = MutableStateFlow(PostCreationUIState())
     val postCreationUIState = _postCreationUIState.asStateFlow()
     private val _aiPostCreationUIState = MutableStateFlow(AIPostCreationUIState())
     val aiPostCreationUIState = _aiPostCreationUIState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            currentUserRepository.getUserCredentials().collect { user ->
+                if (user != null) {
+                    _postCreationUIState.update{
+                        it.copy(
+                            username = user.username,
+                            userid = user.id.toString()
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     fun onPostChange(post: String) {
         _postCreationUIState.update {
@@ -47,7 +64,12 @@ class PostCreationViewModel(
 
             }
             val result = withContext(Dispatchers.IO) {
-                postRepository.createPost(PostRequestDto(_postCreationUIState.value.post, ""))
+                postRepository.createPost(
+                    PostRequestDto(
+                        _postCreationUIState.value.post,
+                        _postCreationUIState.value.userid,
+                        _postCreationUIState.value.username)
+                )
             }
             result.onSuccess {
                 _postCreationUIState.update {
