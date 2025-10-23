@@ -19,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -28,15 +27,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilefinalproject.core.ai.data.repository.GenerativeModelRepositoryImpl
 import com.example.mobilefinalproject.core.ai.model.GenerativeModelService
-import com.example.mobilefinalproject.core.data.local.PreferencesDataSource
 import com.example.mobilefinalproject.core.data.network.ApiProvider
-import com.example.mobilefinalproject.core.repository.CurrentUserRepositoryImpl
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
 
 @Composable
-fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
-    val context = LocalContext.current
-
+fun PostScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
     Scaffold { innerPadding ->
         Column(
             modifier = modifier
@@ -164,7 +159,7 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
             LaunchedEffect(
                 postCreationUIState.onSuccessUpload
             ) {
-//                onSuccess()
+                onSuccess()
             }
         }
     }

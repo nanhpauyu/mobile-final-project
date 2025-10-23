@@ -3,7 +3,6 @@ package com.example.mobilefinalproject.features.post.ui.postcreation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilefinalproject.core.ai.repository.GenerativeModelRepository
-import com.example.mobilefinalproject.core.domain.CurrentUserRepository
 import com.example.mobilefinalproject.features.post.data.remote.dto.request.PostRequestDto
 import com.example.mobilefinalproject.features.post.repository.PostRepository
 import kotlinx.coroutines.Dispatchers
@@ -16,14 +15,14 @@ import kotlinx.coroutines.withContext
 class PostCreationViewModel(
     private val generativeModelRepository: GenerativeModelRepository,
     private val postRepository: PostRepository,
-    private val currentUserRepository: CurrentUserRepository
+//    private val currentUserRepository: CurrentUserRepository
 ) : ViewModel() {
     private val _postCreationUIState = MutableStateFlow(PostCreationUIState())
     val postCreationUIState = _postCreationUIState.asStateFlow()
     private val _aiPostCreationUIState = MutableStateFlow(AIPostCreationUIState())
     val aiPostCreationUIState = _aiPostCreationUIState.asStateFlow()
 
-    init {
+//    init {
 //        viewModelScope.launch {
 //            currentUserRepository.getUserCredentials().collect { user ->
 //                if (user != null) {
@@ -36,7 +35,7 @@ class PostCreationViewModel(
 //                }
 //            }
 //        }
-    }
+//    }
 
     fun onPostChange(post: String) {
         _postCreationUIState.update {
@@ -67,11 +66,8 @@ class PostCreationViewModel(
                 postRepository.createPost(
                     PostRequestDto(
                         _postCreationUIState.value.post,
-//                        _postCreationUIState.value.userid,
-                        "711d5724-d547-3665-925b-73c3f697a758",
-//                        _postCreationUIState.value.username
-                        "Hpauyu Nan"
-                    )
+                        _postCreationUIState.value.userid,
+                        _postCreationUIState.value.username)
                 )
             }
             result.onSuccess {
@@ -79,7 +75,7 @@ class PostCreationViewModel(
                     it.copy(
                         isLoading = false,
                         errorMessage = null,
-                        onSuccessUpload = true
+                        onSuccessUpload =true
                     )
 
                 }
@@ -91,7 +87,7 @@ class PostCreationViewModel(
                             isLoading = false,
                             errorMessage = error.message,
 
-                            )
+                        )
                     }
                 }
         }

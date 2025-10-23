@@ -7,11 +7,12 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSavedStateNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
-import com.example.mobilefinalproject.features.auth.ui.LoginScreen
-import com.example.mobilefinalproject.features.auth.ui.RegisterScreen
+import com.example.mobilefinalproject.features.auth.ui.screen.LoginScreen
+import com.example.mobilefinalproject.features.auth.ui.screen.RegisterScreen
 import com.example.mobilefinalproject.features.comment.ui.commentlist.CommentListScreen
 import com.example.mobilefinalproject.features.post.ui.postcreation.PostCreationScreen
 import com.example.mobilefinalproject.features.post.ui.postlist.PostListScreen
+import com.example.mobilefinalproject.features.profile.ui.screen.ProfileScreen
 
 @Composable
 fun AppNavGraph(modifier: Modifier = Modifier) {
@@ -31,13 +32,32 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                 RegisterScreen(
                     modifier = modifier,
                     onLoginClick = {
+                        backStack.clear()
                         backStack.add(Login)
                     },
+                    onRegisterSuccess = {
+                        backStack.clear()
+                        backStack.add(PostList)
+                    }
                 )
             }
             entry<Login> {
                 LoginScreen(
                     modifier = modifier,
+                    onRegisterClick = {
+                        backStack.clear()
+                        backStack.add(Register)
+                    },
+                    onLoginSuccess = {
+                        backStack.clear()
+                        backStack.add(PostList)
+                    }
+                )
+            }
+            entry<Profile> {
+                ProfileScreen(
+                    modifier = modifier,
+                    userId = it.id,
                 )
             }
             entry<PostList> {
