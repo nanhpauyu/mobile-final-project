@@ -1,3 +1,4 @@
+import json
 from flask import Flask, request, jsonify
 import uuid
 import logging
@@ -8,15 +9,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-users = {"dummy@dummy.com":{
+users = {"nn":{
     "username":"Dummy",
-    "email": "dummy@dummy.com",
+    "email": "nn",
     "password":"password",
     "id":str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy")),
     "bio":"This is my bio"
 }}
 id_to_user_email = {
-    str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy")) :"dummy@dummy.com"
+    str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy")) :"nn"
 }
 user_session ={} # {uuid: email}
 
@@ -230,6 +231,7 @@ def handle_post():
             # Extract data
             text = data['text']
             userid = data['userid']
+            print(userid)
             username = data['username']
             id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userid+text))
             posts[id] = {
@@ -256,13 +258,15 @@ def handle_post():
 
 
 
-@app.route('/posts/<string:postId>/comments', methods=['GET'])
+@app.route('/posts/<string:postId>/comments', methods=['GET',"POST"])
 def handle_comment(postId):
     if request.method == 'POST':
         token = get_bearer_token()
+        print(token)
         if token and token in user_session.keys():
             try:
                 data = request.get_json()
+                print(data)
                 if data is None:
                     return jsonify({
                         "status": "error",
@@ -278,12 +282,25 @@ def handle_comment(postId):
             username = data['username']
             postId = postId
             id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userId+"comment"+text))
-            comments[postId]['comments'].append({
-                "userId":userId,
-                "username":username,
-                'text':text,
-                'id':id
-            })
+            current_post = comments.get(postId,None)
+            if current_post:
+                comments[postId]['comments'].append({
+                    "userId":userId,
+                    "username":username,
+                    'text':text,
+                    'id':id
+                })
+            else:
+                comments[postId] ={
+                    "comments":[
+                        {
+                    "userId":userId,
+                    "username":username,
+                    'text':text,
+                    'id':id
+                }   
+                    ]
+                }
             return jsonify({
                 "status":"success",
                 "data":{"username":username,
@@ -294,15 +311,23 @@ def handle_comment(postId):
 
 
     else:
-        return jsonify({
+
+        current_post = comments.get(postId,None)
+        if current_post:
+            return jsonify({
             "status":"success",
             "data":comments[postId]['comments']
         })
+        return jsonify({
+            "status":"success",
+            "data":"not found"
+        }),400
+
 
 
 def get_bearer_token():
     auth_header = request.headers.get('Authorization')
-    
+    print(f"auth_header   {auth_header}")
     if auth_header and auth_header.startswith('Bearer '):
         return auth_header.split(' ')[1]
     
