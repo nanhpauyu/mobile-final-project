@@ -3,8 +3,9 @@ package com.example.mobilefinalproject.features.auth.ui.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
-import com.example.mobilefinalproject.core.data.network.dto.AuthRegisterDto
+import com.example.mobilefinalproject.core.model.CurrentUser
+import com.example.mobilefinalproject.features.auth.data.dto.request.AuthLoginDto
+import com.example.mobilefinalproject.features.auth.data.dto.request.AuthRegisterDto
 import com.example.mobilefinalproject.features.auth.domain.AuthRepository
 import com.example.mobilefinalproject.features.auth.ui.state.AuthUiState
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +24,9 @@ class AuthViewModel(
     fun onUserNameChange(username: String) = _uiState.update { it.copy(username = username) }
     fun onEmailChange(email: String) = _uiState.update { it.copy(email = email) }
     fun onPasswordChange(password: String) = _uiState.update { it.copy(password = password) }
+    fun onBioChange(bio: String) = _uiState.update { it.copy(bio = bio) }
 
     fun login() {
-        Log.i("login", "login-called")
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 
@@ -37,10 +38,18 @@ class AuthViewModel(
                     )
                 )
             }
-            .onSuccess {
+            .onSuccess { authResponseDto ->
                 _uiState.update {
-                    // TODO: user detail
-                    it.copy(userDetail = null, isLoading = false)
+                    it.copy(
+                        userDetail = CurrentUser(
+                            accessToken = authResponseDto.data.access_token,
+                            bio = authResponseDto.data.bio,
+                            email = authResponseDto.data.email,
+                            id = authResponseDto.data.id,
+                            username = authResponseDto.data.username
+                        ),
+                        isLoading = false,
+                    )
                 }
             }
             .onFailure { err ->
@@ -59,14 +68,23 @@ class AuthViewModel(
                     AuthRegisterDto(
                         username = _uiState.value.username,
                         password = _uiState.value.password,
-                        email = _uiState.value.email
+                        email = _uiState.value.email,
+                        bio = _uiState.value.bio
                     )
                 )
             }
-            .onSuccess {
+            .onSuccess { authResponseDto ->
                 _uiState.update {
-                    // TODO: user detail
-                    it.copy(userDetail = null, isLoading = false)
+                    it.copy(
+                        userDetail = CurrentUser(
+                            accessToken = authResponseDto.data.access_token,
+                            bio = authResponseDto.data.bio,
+                            email = authResponseDto.data.email,
+                            id = authResponseDto.data.id,
+                            username = authResponseDto.data.username
+                        ),
+                        isLoading = false,
+                    )
                 }
             }
             .onFailure { err ->
@@ -76,5 +94,4 @@ class AuthViewModel(
             }
         }
     }
-
 }

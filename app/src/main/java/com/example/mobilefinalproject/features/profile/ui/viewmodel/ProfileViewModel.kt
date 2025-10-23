@@ -2,7 +2,7 @@ package com.example.mobilefinalproject.features.profile.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
+import com.example.mobilefinalproject.features.profile.data.dto.request.UpdateProfileRequestDto
 import com.example.mobilefinalproject.features.profile.domain.ProfileRepository
 import com.example.mobilefinalproject.features.profile.ui.state.EditProfileUiState
 import com.example.mobilefinalproject.features.profile.ui.state.ProfileUiState
@@ -25,37 +25,6 @@ class ProfileViewModel(
     fun onBioChange(bio: String) = _editProfileUiState.update { it.copy(bio = bio) }
 
 
-    fun getMyProfile() {
-        viewModelScope.launch {
-            _profileUiState.update {
-                it.copy(isLoading = true)
-            }
-            withContext(Dispatchers.IO) {
-                profileRepository.me()
-            }
-            .onSuccess { profile ->
-                _profileUiState.update {
-                    it.copy(
-                        id = profile.id,
-                        username = profile.username,
-                        email = profile.email,
-                        bio = profile.bio,
-                        isLoading = false,
-                        errorMessage = null,
-                    )
-                }
-            }
-            .onFailure { err ->
-                _profileUiState.update {
-                    it.copy(
-                        isLoading = false,
-                        errorMessage = err.message,
-                    )
-                }
-            }
-        }
-    }
-
     fun editProfile() {
         viewModelScope.launch {
             _editProfileUiState.update {
@@ -63,7 +32,7 @@ class ProfileViewModel(
             }
             withContext(Dispatchers.IO) {
                 profileRepository.editProfile(
-                    ProfileRequestDto(
+                    UpdateProfileRequestDto(
                         username = _editProfileUiState.value.username,
                         bio = _editProfileUiState.value.bio,
                     )
@@ -102,10 +71,10 @@ class ProfileViewModel(
             .onSuccess { profile ->
                 _profileUiState.update {
                     it.copy(
-                        id = profile.id,
-                        username = profile.username,
-                        email = profile.email,
-                        bio = profile.bio,
+                        username = profile.data.username,
+                        bio = profile.data.bio,
+                        email = profile.data.email,
+                        id = profile.data.id,
                         isLoading = false,
                         errorMessage = null,
                     )

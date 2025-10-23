@@ -1,15 +1,13 @@
 package com.example.mobilefinalproject.features.profile.data.api
 
-import com.example.mobilefinalproject.core.data.network.dto.ProfileRequestDto
-import com.example.mobilefinalproject.core.data.network.dto.ProfileResponseDto
+import com.example.mobilefinalproject.features.profile.data.dto.request.UpdateProfileRequestDto
+import com.example.mobilefinalproject.features.profile.data.dto.response.ProfileResponseDto
 import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ProfileService {
-    @GET("/users/me")
-    suspend fun me(): ProfileResponseDto
-    @GET("/users/{id}")
+    @GET("users/{id}")
     suspend fun findById(id: Long): ProfileResponseDto
-    @POST("/users/me")
-    suspend fun editProfile(profileRequestDto: ProfileRequestDto)
+    @POST("update_profile")
+    suspend fun editProfile(profileRequestDto: UpdateProfileRequestDto): ProfileResponseDto
 }

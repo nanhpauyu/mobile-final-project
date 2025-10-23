@@ -17,7 +17,6 @@ import com.example.mobilefinalproject.features.post.ui.postcreation.PostCreation
 @Composable
 fun AppNavGraph(modifier: Modifier = Modifier) {
     val backStack = rememberNavBackStack<AppNavKey>(Login)
-//    val backStack = rememberNavBackStack<AppNavKey>(PostList)
     NavDisplay(
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
