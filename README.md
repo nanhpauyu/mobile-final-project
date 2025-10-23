@@ -141,6 +141,9 @@ Gemini text generate AI is used to imprve post content
 
 **Science and Technology of Consciousness**: Just as right action in harmony with natural law leads to fulfillment in life, each mindful action in coding leads to the fulfillment of a seamless, user-friendly Android application. Acting with clear purpose and awareness in development brings both professional success and inner satisfaction.
 
+## Testing
+![testing](./screenshot/project-test.png)
+
 ## Screen Short
 Login
 ![login](./screenshot/project-login.png)
@@ -166,7 +169,4 @@ Profile
 ![profile 0](./screenshot/project-profile-0.png)
 ![profile 1](./screenshot/project-profile-1.png)
 ![profile 2](./screenshot/project-profile-2.png)
-
-## Testing
-![testing](./screenshot/project-test.png)
 
