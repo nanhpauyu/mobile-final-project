@@ -79,5 +79,5 @@ fun RegisterScreen(modifier: Modifier = Modifier, onLoginClick: Any ) {
 @Preview(showBackground = true)
 @Composable
 fun RegisterScreenPreview() {
-    RegisterScreen()
+//    RegisterScreen()
 }

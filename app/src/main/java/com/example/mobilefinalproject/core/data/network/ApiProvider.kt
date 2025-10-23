@@ -1,5 +1,6 @@
 package com.example.mobilefinalproject.core.data.network
 
+import com.example.mobilefinalproject.core.okHttpClient
 import com.example.mobilefinalproject.features.auth.data.api.AuthService
 import com.example.mobilefinalproject.features.comment.data.remote.api.CommentAPIService
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
@@ -14,7 +15,8 @@ object ApiProvider {
 //            .baseUrl("http://172.17.141.86:8080/api/v1/")
 //            .baseUrl("https://2a362ebae9b9.ngrok-free.app/api/v1/")
 //            .baseUrl("https://biursite-6z6n.onrender.com/api/")
-            .baseUrl("http://localhost:8080/")
+            .baseUrl("http://localhost:5000/")
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

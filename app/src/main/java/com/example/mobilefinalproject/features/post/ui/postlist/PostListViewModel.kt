@@ -1,5 +1,6 @@
 package com.example.mobilefinalproject.features.post.ui.postlist
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilefinalproject.features.post.repository.PostRepository
@@ -35,6 +36,7 @@ class PostListViewModel(
                 postRepository.getPosts()
             }
             result.onSuccess { posts ->
+                Log.d("hello", "Posts: $posts")
                 _postListUIState.update {
                     it.copy(
                         isLoading = false,
@@ -43,6 +45,7 @@ class PostListViewModel(
                 }
             }
                 .onFailure { error ->
+                    Log.d("hello", "Posts: $error")
                     _postListUIState.update {
                         it.copy(
                             isLoading = false,

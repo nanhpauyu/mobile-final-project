@@ -5,7 +5,9 @@ data class CommentCreateUIState(
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val isSuccess: Boolean? = null,
-    val postId: String = ""
+    val postId: String = "",
+    val userId: String = "",
+    val username: String = ""
 ) {
     companion object {
         val EMPTY = CommentCreateUIState()

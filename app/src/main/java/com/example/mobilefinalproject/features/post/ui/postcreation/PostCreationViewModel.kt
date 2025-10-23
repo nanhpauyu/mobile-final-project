@@ -24,18 +24,18 @@ class PostCreationViewModel(
     val aiPostCreationUIState = _aiPostCreationUIState.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            currentUserRepository.getUserCredentials().collect { user ->
-                if (user != null) {
-                    _postCreationUIState.update{
-                        it.copy(
-                            username = user.username,
-                            userid = user.id.toString()
-                        )
-                    }
-                }
-            }
-        }
+//        viewModelScope.launch {
+//            currentUserRepository.getUserCredentials().collect { user ->
+//                if (user != null) {
+//                    _postCreationUIState.update{
+//                        it.copy(
+//                            username = user.username,
+//                            userid = user.id.toString()
+//                        )
+//                    }
+//                }
+//            }
+//        }
     }
 
     fun onPostChange(post: String) {
@@ -67,8 +67,11 @@ class PostCreationViewModel(
                 postRepository.createPost(
                     PostRequestDto(
                         _postCreationUIState.value.post,
-                        _postCreationUIState.value.userid,
-                        _postCreationUIState.value.username)
+//                        _postCreationUIState.value.userid,
+                        "711d5724-d547-3665-925b-73c3f697a758",
+//                        _postCreationUIState.value.username
+                        "Hpauyu Nan"
+                    )
                 )
             }
             result.onSuccess {
@@ -76,7 +79,7 @@ class PostCreationViewModel(
                     it.copy(
                         isLoading = false,
                         errorMessage = null,
-                        onSuccessUpload =true
+                        onSuccessUpload = true
                     )
 
                 }
@@ -88,7 +91,7 @@ class PostCreationViewModel(
                             isLoading = false,
                             errorMessage = error.message,
 
-                        )
+                            )
                     }
                 }
         }

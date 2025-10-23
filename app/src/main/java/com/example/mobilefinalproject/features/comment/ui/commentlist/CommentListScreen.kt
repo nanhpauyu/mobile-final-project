@@ -216,6 +216,7 @@ fun CommentListScreen(
         commentCreateUIState.isSuccess
     ) {
         if (commentCreateUIState.isSuccess == true) {
+            commentListViewModel.getComments(postId)
             commentCreateViewModel.resetCreateCommentUIState()
         }
     }

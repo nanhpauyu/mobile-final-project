@@ -7,5 +7,6 @@ data class CommentListUIState(
     val comments: CommentListResponseDto? = null,
     val errorMessage: String? = null,
     val username: String = "",
+    val userId: String = "",
     val post: String = ""
 )
