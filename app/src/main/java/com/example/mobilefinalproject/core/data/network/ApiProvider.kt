@@ -22,7 +22,7 @@ object ApiProvider {
 //                    .baseUrl("http://localhost:8080/")
 //                    .baseUrl("https://0d12602c3b68.ngrok-free.app/")
 //                    .baseUrl("http://localhost:5000/")
-                    .baseUrl("http://18.143.73.231/")
+                    .baseUrl("http://18.143.73.231:5000/")
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
