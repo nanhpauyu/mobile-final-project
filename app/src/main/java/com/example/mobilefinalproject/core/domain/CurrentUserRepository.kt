@@ -5,5 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface CurrentUserRepository {
     suspend fun saveCurrentUser(user: CurrentUser) : Result<Unit>
+    suspend fun clearCurrentUser() : Result<Unit>
     fun getUserCredentials(): Flow<CurrentUser?>
 }

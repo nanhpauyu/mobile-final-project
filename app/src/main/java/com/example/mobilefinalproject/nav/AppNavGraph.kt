@@ -69,7 +69,8 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                         backStack.add(AddPost)
                     },
                     onLogoutClick = {
-
+                        backStack.clear()
+                        backStack.add(Login)
                     },
                     onProfileClick = {
 

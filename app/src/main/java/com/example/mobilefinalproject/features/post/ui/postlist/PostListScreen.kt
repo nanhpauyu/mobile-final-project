@@ -32,6 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobilefinalproject.core.AppState
+import com.example.mobilefinalproject.core.AppStateProvider
+import com.example.mobilefinalproject.core.AppStateProvider.appState
 import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
@@ -57,6 +60,7 @@ fun PostListScreen(
     val postListUIState by postListViewModel.postListUIState.collectAsStateWithLifecycle()
 
     val posts = postListUIState.posts?.data
+    val appState: AppState = AppStateProvider.getAppState(context)
 
     Scaffold { innerPadding ->
         Column(
@@ -74,8 +78,8 @@ fun PostListScreen(
                 TextButton(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-                        TODO("Implement logout logic")
-//                        onLogoutClick()
+                        appState.clearCurrentUser()
+                        onLogoutClick()
                     }
                 ) {
                     Text(

@@ -20,6 +20,12 @@ class PreferencesDataSource(
         }
     }
 
+    suspend fun clearCurrentUser() {
+        context.dataStore.edit { preferences: MutablePreferences ->
+            preferences.clear()
+        }
+    }
+
     fun getCurrentUser(): Flow<CurrentUser?> {
         return context.dataStore.data.map { preferences ->
 

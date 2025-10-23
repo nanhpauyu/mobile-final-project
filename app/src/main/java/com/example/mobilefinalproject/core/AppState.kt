@@ -22,18 +22,6 @@ import kotlinx.coroutines.launch
 class AppState(
     private val currentUserRepository: CurrentUserRepository
 ): ViewModel() {
-//    private val _currentUser = MutableStateFlow<CurrentUser?>(null)
-//    val currentUser = _currentUser.asStateFlow()
-//
-//    init {
-//        Log.i("AppState", "init")
-//        viewModelScope.launch {
-//            currentUserRepository.getUserCredentials().collect { user ->
-//                _currentUser.update { user }
-//            }
-//        }
-//    }
-
     val currentUser: StateFlow<CurrentUser?>  = currentUserRepository.getUserCredentials()
         .flowOn(Dispatchers.IO)
         .distinctUntilChanged()
@@ -49,6 +37,12 @@ class AppState(
     fun saveCurrentUser(user: CurrentUser) {
         viewModelScope.launch {
             currentUserRepository.saveCurrentUser(user)
+        }
+    }
+
+    fun clearCurrentUser() {
+        viewModelScope.launch {
+            currentUserRepository.clearCurrentUser()
         }
     }
 }

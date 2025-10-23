@@ -14,5 +14,7 @@ class CurrentUserRepositoryImpl(
         }
     }
 
+    override suspend fun clearCurrentUser(): Result<Unit>  = runCatching { preferencesDataSource.clearCurrentUser() }
+
     override fun getUserCredentials(): Flow<CurrentUser?> = preferencesDataSource.getCurrentUser()
 }
