@@ -1,11 +1,13 @@
 package com.example.mobilefinalproject.features.auth.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -51,7 +53,8 @@ fun RegisterScreen(
         }
     }
 
-    LaunchedEffect(appState.currentUser) {
+    LaunchedEffect(currentUser) {
+        Log.i("RegisterScreen", "currentUser: $currentUser")
         if (currentUser != null) {
             onRegisterSuccess()
         }
@@ -87,6 +90,11 @@ fun RegisterScreen(
                 visualTransformation = PasswordVisualTransformation(),
                 label = { Text("Password") },
             )
+            OutlinedTextField(
+                value = authUiState.bio,
+                onValueChange = authViewModel::onBioChange,
+                label = { Text("Bio") },
+            )
             Button(onClick = authViewModel::register) {
                 Text("Register")
             }
@@ -99,6 +107,16 @@ fun RegisterScreen(
                 color = Color.Blue,
                 textDecoration = TextDecoration.Underline
             )
+            when {
+                authUiState.isLoading -> {
+                    LinearProgressIndicator()
+                }
+                authUiState.errorMessage != null -> {
+                    Text(
+                        text = authUiState.errorMessage!!,
+                    )
+                }
+            }
         }
     }
 }

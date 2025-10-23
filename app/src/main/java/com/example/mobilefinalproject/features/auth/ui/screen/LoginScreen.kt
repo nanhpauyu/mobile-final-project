@@ -1,11 +1,13 @@
 package com.example.mobilefinalproject.features.auth.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -45,13 +47,14 @@ fun LoginScreen(
     val appState: AppState = AppStateProvider.getAppState(context)
     val currentUser by appState.currentUser.collectAsStateWithLifecycle()
 
+
     LaunchedEffect(authUiState.userDetail) {
         if (authUiState.userDetail != null) {
             appState.saveCurrentUser(authUiState.userDetail!!)
         }
     }
 
-    LaunchedEffect(appState.currentUser) {
+    LaunchedEffect(currentUser) {
         if (currentUser != null) {
             onLoginSuccess()
         }
@@ -97,7 +100,7 @@ fun LoginScreen(
             )
             when {
                 authUiState.isLoading -> {
-                    Text("Loading...")
+                    LinearProgressIndicator()
                 }
                 authUiState.errorMessage != null -> {
                     Text(authUiState.errorMessage!!)

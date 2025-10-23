@@ -57,8 +57,6 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: Long? = null) {
     LaunchedEffect(userId) {
         if (userId != null) {
             profileViewModel.getProfileById(userId)
-        } else {
-            profileViewModel.getMyProfile()
         }
     }
 
