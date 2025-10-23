@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -68,8 +69,8 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: String? = null) {
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "add"
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "edit"
                 )
             }
         }
