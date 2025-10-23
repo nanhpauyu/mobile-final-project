@@ -12,8 +12,14 @@ users = {"dummy@dummy.com":{
     "username":"Dummy",
     "email": "dummy@dummy.com",
     "password":"password",
-    "id":str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy"))
+    "id":str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy")),
+    "bio":"This is my bio"
 }}
+id_to_user_email = {
+    str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy")) :"dummy@dummy.com"
+}
+user_session ={} # {uuid: email}
+
 user_uuid = str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy"))
 posts = {
     str(uuid.uuid3(uuid.NAMESPACE_DNS, user_uuid + "This is my first post")): {
@@ -49,7 +55,7 @@ comments = {
 }
 random_uuid = uuid.uuid4()
 
-@app.route('/users', methods=[ 'POST'])
+@app.route('/register', methods=[ 'POST'])
 def handle_register():
     if request.method == 'POST':
         try:
@@ -59,20 +65,25 @@ def handle_register():
                 "status": "error",
                 "data": "Invalid JSON or missing data in request body."
             }), 400  # Return 400 Bad Request
-
-        if data and 'username' in data and 'email' in data and 'password' in data:
+        required_fields = ['email', 'password','username','bio']
+        if all(field in data for field in required_fields):
             username = data['username']
             email = data['email']
             password = data['password']
-            users[email] = {"username":username, "password":password,"id": str(uuid.uuid3(uuid.NAMESPACE_DNS, username))}
-
-            # Return a success message with the received data
+            bio = data['bio']
+            id = str(uuid.uuid3(uuid.NAMESPACE_DNS, username))
+            users[email] = {"username":username, "password":password,"id": id, "bio":bio,"email":email}
+            id_to_user_email[id] = email
+            user_session_id = str(uuid.uuid4())
+            user_session[user_session_id] = email
             return jsonify({
                 "status":"success",
                 "data": {
                 "username":username,
                 "email":email,
-                "id":users[email]["id"]
+                "id":users[email]["id"],
+                "bio": bio,
+                "access_token": user_session_id
             }
             }),200
         else:
@@ -81,7 +92,7 @@ def handle_register():
                 "data": "POST request successful, but 'user' or 'value' fields are missing."
             }), 400
 
-@app.route('/auth/login', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def handle_login():
     try:
         data = request.get_json()
@@ -109,15 +120,18 @@ def handle_login():
     print(users.keys())
     if email in users.keys():
         user = users[email]
-        print(user)
         if users[email]["password"] == password: 
             # ⭐️ Successful Login ⭐️
+            user_session_id = str(uuid.uuid4())
+            user_session[user_session_id] = email
             return jsonify({
                 "status": "success",
                 "data": {
                     "username":users[email]['username'],
                     "email":email,
-                    "id":users[email]["id"]
+                    "id":users[email]["id"],
+                    "bio":users[email]['bio'],
+                    "access_token":user_session_id
                 },
                 
             }), 200 # HTTP 200 OK
@@ -134,49 +148,104 @@ def handle_login():
         }), 401 # HTTP 401 Unauthorized
 
 
+@app.route('/logout',methods=['GET'] )
+def handle_logout():
+    token = get_bearer_token()
+    if token and token in user_session.keys():
+        del user_session[token]
+        return jsonify({'status': 'success'}), 200
+    return jsonify({'status':"fail"})
+# logout delete id from the user_session /logout access token from header
+# status :success
+
+
+
+
+@app.route('/users/<string:userId>', methods=['GET',"POST"])
+def handle_users(userId):
+    print(users)
+    email = id_to_user_email[userId]
+    user = users[email]
+    if request.method == 'POST':
+        token = get_bearer_token()
+        if token and token in user_session.keys():
+            try:
+                data = request.get_json()
+                if data is None:
+                    return jsonify({
+                        "status": "error",
+                        "data": "Missing JSON data in request body."
+                    }), 400 
+            except Exception:
+                return jsonify({
+                    "status": "error",
+                    "data": "Invalid JSON format in request body."
+                }), 400
+            update_username = data['username']
+            update_bio = data['bio']
+            print(user)
+            new_user = {
+                "username":update_username,"password":user['password'],'id':user['id'],'bio':update_bio,'email':user['email']
+            }
+            users[user['email']] = new_user
+            return jsonify({
+                "status":"success",
+                "data":new_user
+            })
+        else:
+            return jsonify({'status':"fail", "data":"Token missmatch"})
+    else:
+        return jsonify({
+            "status":"success",
+            "data":user
+        })
+
+
 @app.route('/posts', methods=['GET',"POST"])
 def handle_post():
     if request.method == 'POST':
-        try:
-            data = request.get_json()
-            if data is None:
+        token = get_bearer_token()
+        if token and token in user_session.keys():
+            try:
+                data = request.get_json()
+                if data is None:
+                    return jsonify({
+                        "status": "error",
+                        "data": "Missing JSON data in request body."
+                    }), 400 
+            except Exception:
                 return jsonify({
                     "status": "error",
-                    "data": "Missing JSON data in request body."
+                    "data": "Invalid JSON format in request body."
                 }), 400 
-        except Exception:
-            return jsonify({
-                "status": "error",
-                "data": "Invalid JSON format in request body."
-            }), 400 
 
-        required_fields = ['text', 'userid',"username"]
-        if not all(field in data for field in required_fields):
-            return jsonify({
-                "status": "error",
-                "data": "Missing required fields: 'email' and 'password'."
-            }), 400
-        
-        # Extract data
-        text = data['text']
-        userid = data['userid']
-        username = data['username']
-        id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userid+text))
-        posts[id] = {
-            "id" :id,
-            "userid":userid,
-            "username":username,
-            "text":text
-        }
-        return jsonify({
-            "status": "success",
-            "data": {
-                "username":username,
+            required_fields = ['text', 'userid',"username"]
+            if not all(field in data for field in required_fields):
+                return jsonify({
+                    "status": "error",
+                    "data": "Missing required fields: 'email' and 'password'."
+                }), 400
+            
+            # Extract data
+            text = data['text']
+            userid = data['userid']
+            username = data['username']
+            id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userid+text))
+            posts[id] = {
+                "id" :id,
                 "userid":userid,
-                "text":text,
-                "id":id
+                "username":username,
+                "text":text
             }
-        }),200
+            return jsonify({
+                "status": "success",
+                "data": {
+                    "username":username,
+                    "userid":userid,
+                    "text":text,
+                    "id":id
+                }
+            }),200
     else:
         return jsonify({
             "status":"success",
@@ -186,39 +255,55 @@ def handle_post():
 @app.route('/posts/<string:postId>/comments', methods=['GET','POST'])
 def handle_comment(postId):
     if request.method == 'POST':
-        try:
-            data = request.get_json()
-            if data is None:
+        token = get_bearer_token()
+        if token and token in user_session.keys():
+            try:
+                data = request.get_json()
+                if data is None:
+                    return jsonify({
+                        "status": "error",
+                        "data": "Missing JSON data in request body."
+                    }), 400 
+            except Exception:
                 return jsonify({
                     "status": "error",
-                    "data": "Missing JSON data in request body."
+                    "data": "Invalid JSON format in request body."
                 }), 400 
-        except Exception:
-            return jsonify({
-                "status": "error",
-                "data": "Invalid JSON format in request body."
-            }), 400 
-        text = data['text']
-        userid = data['userid']
-        username = data['username']
-        postId = postId
-        id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userid+"comment"+text))
-        return jsonify({
-            "status":"success",
-            data:{"username":username,
-            "userid":userid,
-            "text":text,
-            "id":id}                
+            text = data['text']
+            userId = data['userId']
+            username = data['username']
+            postId = postId
+            id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userId+"comment"+text))
+            comments[postId]['comments'].append({
+                "userId":userId,
+                "username":username,
+                'text':text,
+                'id':id
             })
+            return jsonify({
+                "status":"success",
+                "data":{"username":username,
+                "userId":userId,
+                "text":text,
+                "id":id}                
+                }),200
 
 
     else:
         return jsonify({
             "status":"success",
-            "data":comments
+            "data":comments[postId]['comments']
         })
 
 
+def get_bearer_token():
+    auth_header = request.headers.get('Authorization')
+    
+    if auth_header and auth_header.startswith('Bearer '):
+        return auth_header.split(' ')[1]
+    
+    return None
+
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)
