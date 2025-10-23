@@ -1,5 +1,6 @@
 package com.example.mobilefinalproject.features.auth.ui.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mobilefinalproject.core.data.network.dto.AuthLoginDto
@@ -24,6 +25,7 @@ class AuthViewModel(
     fun onPasswordChange(password: String) = _uiState.update { it.copy(password = password) }
 
     fun login() {
+        Log.i("login", "login-called")
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
 

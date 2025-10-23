@@ -95,6 +95,14 @@ fun LoginScreen(
                 color = Color.Blue,
                 textDecoration = TextDecoration.Underline
             )
+            when {
+                authUiState.isLoading -> {
+                    Text("Loading...")
+                }
+                authUiState.errorMessage != null -> {
+                    Text(authUiState.errorMessage!!)
+                }
+            }
         }
     }
 }
