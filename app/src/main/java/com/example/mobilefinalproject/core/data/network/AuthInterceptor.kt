@@ -13,9 +13,11 @@ class AuthInterceptor(private val context: Context) : Interceptor {
         val currentUser: CurrentUser? = appState.currentUser.value
 
         val requestBuilder = chain.request().newBuilder()
-        currentUser?.let {
-            requestBuilder.addHeader("Authorization", "Bearer ${currentUser.accessToken}")
-        }
+//        currentUser?.let {
+//            requestBuilder.addHeader("Authorization", "Bearer ${currentUser.accessToken}")
+//        }
+
+        requestBuilder.addHeader("Authorization", "Bearer my_token")
         return chain.proceed(requestBuilder.build())
     }
 }
