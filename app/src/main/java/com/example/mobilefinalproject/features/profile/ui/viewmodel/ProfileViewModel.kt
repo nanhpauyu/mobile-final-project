@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.String
 
 class ProfileViewModel(
     private val profileRepository: ProfileRepository
@@ -24,6 +25,15 @@ class ProfileViewModel(
     fun onUsernameChange(username: String) = _editProfileUiState.update { it.copy(username = username) }
     fun onBioChange(bio: String) = _editProfileUiState.update { it.copy(bio = bio) }
 
+    fun setEditProfile() {
+        _editProfileUiState.update {
+            EditProfileUiState(
+                id = profileUiState.value.id,
+                username = profileUiState.value.username,
+                bio = profileUiState.value.bio,
+            )
+        }
+    }
 
     fun editProfile() {
         viewModelScope.launch {
@@ -60,7 +70,7 @@ class ProfileViewModel(
         }
     }
 
-    fun getProfileById(id: Long) {
+    fun getProfileById(id: String) {
         viewModelScope.launch {
             _profileUiState.update {
                 it.copy(isLoading = true)

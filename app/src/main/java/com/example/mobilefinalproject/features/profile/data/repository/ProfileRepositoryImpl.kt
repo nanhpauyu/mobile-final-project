@@ -8,7 +8,7 @@ import com.example.mobilefinalproject.features.profile.domain.ProfileRepository
 class ProfileRepositoryImpl(
     private val profileService: ProfileService
 ): ProfileRepository  {
-    override suspend fun findById(id: Long): Result<ProfileResponseDto> {
+    override suspend fun findById(id: String): Result<ProfileResponseDto> {
         return runCatching {
             profileService.findById(id)
         }

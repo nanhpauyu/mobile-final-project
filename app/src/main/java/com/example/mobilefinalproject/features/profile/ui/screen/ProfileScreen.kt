@@ -14,6 +14,7 @@ import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -41,7 +42,7 @@ import com.example.mobilefinalproject.features.profile.ui.state.EditProfileUiSta
 import com.example.mobilefinalproject.features.profile.ui.viewmodel.ProfileViewModel
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier, userId: Long? = null) {
+fun ProfileScreen(modifier: Modifier = Modifier, userId: String? = null) {
     val context = LocalContext.current
     val profileViewModel = viewModel {
         ProfileViewModel(ProfileRepositoryImpl(ApiProvider.getProfileService(context)))
@@ -54,16 +55,15 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: Long? = null) {
 
     val editDialog = rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(userId) {
-        if (userId != null) {
-            profileViewModel.getProfileById(userId)
-        }
+    LaunchedEffect(userId, currentUser?.id) {
+        profileViewModel.getProfileById(userId ?: currentUser?.id!!)
     }
 
     Scaffold (
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
+                    profileViewModel.setEditProfile()
                     editDialog.value = true
                 }
             ) {
@@ -88,6 +88,14 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: Long? = null) {
             Text(text = "Username: ${profileUiState.username}")
             Text(text = "Email: ${profileUiState.email}")
             Text(text = "Bio: ${profileUiState.bio}")
+            when {
+                editProfileUiState.isLoading -> {
+                    LinearProgressIndicator()
+                }
+                editProfileUiState.errorMessage != null -> {
+                    Text(text = "Error: ${editProfileUiState.errorMessage}")
+                }
+            }
         }
     }
 

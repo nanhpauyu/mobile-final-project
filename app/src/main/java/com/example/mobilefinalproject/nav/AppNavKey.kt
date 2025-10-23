@@ -12,7 +12,7 @@ data object Register: AppNavKey
 data object Login: AppNavKey
 
 @Serializable
-data class Profile(val id: Long): AppNavKey
+data class Profile(val id: String? = null): AppNavKey
 
 @Serializable
 data object PostList: AppNavKey
