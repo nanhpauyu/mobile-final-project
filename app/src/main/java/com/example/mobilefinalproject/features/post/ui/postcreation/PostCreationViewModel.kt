@@ -53,7 +53,7 @@ class PostCreationViewModel(
         }
     }
 
-    fun onPostSubmit() {
+    fun onPostSubmit(userId: String, username:String) {
         viewModelScope.launch {
             _postCreationUIState.update {
                 it.copy(
@@ -66,8 +66,8 @@ class PostCreationViewModel(
                 postRepository.createPost(
                     PostRequestDto(
                         _postCreationUIState.value.post,
-                        _postCreationUIState.value.userid,
-                        _postCreationUIState.value.username)
+                        userId,
+                        username)
                 )
             }
             result.onSuccess {
@@ -93,13 +93,13 @@ class PostCreationViewModel(
         }
     }
 
-    fun onAIModifyPostSubmit() {
+    fun onAIModifyPostSubmit(userId: String, username:String) {
         _postCreationUIState.update {
             it.copy(
                 post = _aiPostCreationUIState.value.post
             )
         }
-        onPostSubmit()
+        onPostSubmit(userId,username)
     }
 
     fun onAIModify() {

@@ -27,7 +27,7 @@ class CommentCreateViewModel(
 
     fun resetCreateCommentUIState() = _commentCreateUIState.update { CommentCreateUIState.EMPTY }
 
-    fun createComment() {
+    fun createComment(userId:String, username:String) {
         viewModelScope.launch {
             _commentCreateUIState.update {
                 it.copy(
@@ -37,7 +37,7 @@ class CommentCreateViewModel(
             }
             val result = withContext(Dispatchers.IO) {
                 commentRepository.createComment(_commentCreateUIState.value.postId,
-                    CommentRequestDto(_commentCreateUIState.value.text,"711d5724-d547-3665-925b-73c3f697a758","Hpauyu Nan")
+                    CommentRequestDto(_commentCreateUIState.value.text,userId=userId,username=username)
                 )
             }
             result

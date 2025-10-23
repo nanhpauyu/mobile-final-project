@@ -64,6 +64,7 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-ai")
     implementation("androidx.compose.material:material-icons-extended-android:1.7.8")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
 
     implementation("androidx.navigation3:navigation3-runtime:1.0.0-alpha10")
     implementation("androidx.navigation3:navigation3-ui-android:1.0.0-alpha10")

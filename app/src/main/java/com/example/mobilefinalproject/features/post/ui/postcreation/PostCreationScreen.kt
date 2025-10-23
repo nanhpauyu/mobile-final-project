@@ -26,11 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobilefinalproject.core.AppState
+import com.example.mobilefinalproject.core.AppStateProvider
 import com.example.mobilefinalproject.core.ai.data.repository.GenerativeModelRepositoryImpl
 import com.example.mobilefinalproject.core.ai.model.GenerativeModelService
-import com.example.mobilefinalproject.core.data.local.PreferencesDataSource
 import com.example.mobilefinalproject.core.data.network.ApiProvider
-import com.example.mobilefinalproject.core.repository.CurrentUserRepositoryImpl
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
 
 @Composable
@@ -43,6 +43,9 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
                 .padding(innerPadding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val appState: AppState = AppStateProvider.getAppState(context)
+            val currentUser by appState.currentUser.collectAsStateWithLifecycle()
+
             val postCreationViewModel: PostCreationViewModel = viewModel {
                 PostCreationViewModel(
                     generativeModelRepository = GenerativeModelRepositoryImpl(
@@ -60,7 +63,7 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
 
             Spacer(modifier = Modifier.padding(10.dp))
             Text(
-                text = "username",
+                text = currentUser?.username!!,
                 fontWeight = FontWeight.Bold,
                 // Note: horizontalAlignment is for the Column/Parent. Use modifier.align(Alignment.Start)
                 // to align the Text within the Column, and remove textAlign if alignment is applied.
@@ -105,7 +108,7 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
                 Button(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-                        postCreationViewModel.onPostSubmit()
+                        postCreationViewModel.onPostSubmit(currentUser?.username!!, currentUser?.id!!)
                     }
                 ) {
                     Text(
@@ -139,7 +142,7 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
                 ) {
                     Button(
                         onClick = {
-                            postCreationViewModel.onAIModifyPostSubmit()
+                            postCreationViewModel.onAIModifyPostSubmit(currentUser?.username!!, currentUser?.id!!)
                         },
                         // Remove .fillMaxWidth() from the button
                         // Optional: Add padding here if needed

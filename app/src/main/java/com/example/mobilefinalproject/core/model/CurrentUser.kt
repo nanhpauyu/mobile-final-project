@@ -1,7 +1,7 @@
 package com.example.mobilefinalproject.core.model
 
 data class CurrentUser(
-    val id: Long,
+    val id: String,
     val username: String,
     val email: String,
     val bio: String,

@@ -42,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.mobilefinalproject.core.AppState
+import com.example.mobilefinalproject.core.AppStateProvider
 import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.comment.data.remote.api.CommentAPIService
 import com.example.mobilefinalproject.features.comment.data.repository.CommentRepositoryImpl
@@ -56,6 +58,8 @@ fun CommentListScreen(
     username: String
 ) {
     val context = LocalContext.current
+    val appState: AppState = AppStateProvider.getAppState(context)
+    val currentUser by appState.currentUser.collectAsStateWithLifecycle()
     val commentAPIService: CommentAPIService = remember {
         ApiProvider.getCommentAPIService(context)
     }
@@ -201,7 +205,10 @@ fun CommentListScreen(
                     TextButton(
                         onClick = {
                             openDialog.value = false
-                            commentCreateViewModel.createComment()
+                            commentCreateViewModel.createComment(
+                                username = currentUser?.username!!,
+                                userId = currentUser?.id!!
+                            )
                             commentListViewModel.getComments(postId = postId)
                         },
                         modifier = Modifier.align(Alignment.End)

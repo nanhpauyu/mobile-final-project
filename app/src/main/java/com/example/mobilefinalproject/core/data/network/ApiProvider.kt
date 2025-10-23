@@ -1,7 +1,6 @@
 package com.example.mobilefinalproject.core.data.network
 
 import android.content.Context
-import android.util.Log
 import com.example.mobilefinalproject.features.auth.data.api.AuthService
 import com.example.mobilefinalproject.features.comment.data.remote.api.CommentAPIService
 import com.example.mobilefinalproject.features.post.data.remote.api.PostAPIService
@@ -21,7 +20,8 @@ object ApiProvider {
 
                 retrofit = Retrofit.Builder()
 //                    .baseUrl("http://localhost:8080/")
-                    .baseUrl("https://0d12602c3b68.ngrok-free.app/")
+//                    .baseUrl("https://0d12602c3b68.ngrok-free.app/")
+                    .baseUrl("http://localhost:5000/")
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
