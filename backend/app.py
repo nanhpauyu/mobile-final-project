@@ -158,47 +158,48 @@ def handle_logout():
 # logout delete id from the user_session /logout access token from header
 # status :success
 
-
-
-
-@app.route('/users/<string:userId>', methods=['GET',"POST"])
-def handle_users(userId):
-    print(users)
-    email = id_to_user_email[userId]
-    user = users[email]
-    if request.method == 'POST':
-        token = get_bearer_token()
-        if token and token in user_session.keys():
-            try:
-                data = request.get_json()
-                if data is None:
-                    return jsonify({
-                        "status": "error",
-                        "data": "Missing JSON data in request body."
-                    }), 400 
-            except Exception:
+@app.route('/update_profile', methods=["POST"])
+def handle_update_profile():
+    token = get_bearer_token()
+    if token and token in user_session.keys():
+        email = user_session[token]
+        user = users[email]
+        try:
+            data = request.get_json()
+            if data is None:
                 return jsonify({
                     "status": "error",
-                    "data": "Invalid JSON format in request body."
-                }), 400
-            update_username = data['username']
-            update_bio = data['bio']
-            print(user)
-            new_user = {
-                "username":update_username,"password":user['password'],'id':user['id'],'bio':update_bio,'email':user['email']
-            }
-            users[user['email']] = new_user
+                    "data": "Missing JSON data in request body."
+                }), 400 
+        except Exception:
             return jsonify({
-                "status":"success",
-                "data":new_user
-            })
-        else:
-            return jsonify({'status':"fail", "data":"Token missmatch"})
-    else:
+                "status": "error",
+                "data": "Invalid JSON format in request body."
+            }), 400
+        id
+        update_username = data['username']
+        update_bio = data['bio']
+        new_user = {
+            "username":update_username,"password":user['password'],'id':user['id'],'bio':update_bio,'email':user['email']
+        }
+        users[user['email']] = new_user
         return jsonify({
             "status":"success",
-            "data":user
+            "data":new_user
         })
+    else:
+        return jsonify({'status':"fail", "data":"Token missmatch"})
+        
+
+
+@app.route('/users/<string:userId>', methods=['GET'])
+def handle_users(userId):
+    email = id_to_user_email[userId]
+    user = users[email]    
+    return jsonify({
+        "status":"success",
+        "data":user
+    })
 
 
 @app.route('/posts', methods=['GET',"POST"])
@@ -252,7 +253,10 @@ def handle_post():
             "data":list(posts.values())
         })
 
-@app.route('/posts/<string:postId>/comments', methods=['GET','POST'])
+
+
+
+@app.route('/posts/<string:postId>/comments', methods=['GET'])
 def handle_comment(postId):
     if request.method == 'POST':
         token = get_bearer_token()
