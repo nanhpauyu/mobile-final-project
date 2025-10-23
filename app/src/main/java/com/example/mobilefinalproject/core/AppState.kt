@@ -40,9 +40,7 @@ class AppState(
         }
     }
 
-    fun clearCurrentUser() {
-        viewModelScope.launch {
-            currentUserRepository.clearCurrentUser()
-        }
+    suspend fun clearCurrentUser(): Result<Unit> {
+            return currentUserRepository.clearCurrentUser()
     }
 }

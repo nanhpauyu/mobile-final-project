@@ -46,6 +46,7 @@ import com.example.mobilefinalproject.nav.AddPost
 import com.example.mobilefinalproject.nav.CommentList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun PostListScreen(
@@ -85,8 +86,13 @@ fun PostListScreen(
                 TextButton(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-                        appState.clearCurrentUser()
-                        onLogoutClick()
+                        runBlocking {
+                            runCatching {
+                                appState.clearCurrentUser()
+                            }
+                        }.onSuccess {
+                            onLogoutClick()
+                        }
                     }
                 ) {
                     Text(
