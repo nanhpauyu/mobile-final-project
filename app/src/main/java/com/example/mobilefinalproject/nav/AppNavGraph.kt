@@ -56,7 +56,6 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
             entry<Profile> {
                 ProfileScreen(
                     modifier = modifier,
-                    userId = it.id,
                 )
             }
             entry<PostList> {
@@ -73,7 +72,7 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                         backStack.add(Login)
                     },
                     onProfileClick = {
-
+                        backStack.add(Profile())
                     }
                 )
             }

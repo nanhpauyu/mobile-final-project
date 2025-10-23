@@ -89,8 +89,7 @@ fun PostListScreen(
                 TextButton(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-                        TODO("Implement profile navigation")
-//                        onProfileClick()
+                        onProfileClick()
                     }
                 ) {
                     Text(
