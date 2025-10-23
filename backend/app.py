@@ -36,7 +36,7 @@ posts = {
         "id": str(uuid.uuid3(uuid.NAMESPACE_DNS, user_uuid + "This is my second post"))
     },
 }
-comments = {
+COMMENTS = {
     str(uuid.uuid3(uuid.NAMESPACE_DNS,str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy"))+"This is my second post")) :{
         "comments":[
             {
@@ -179,6 +179,16 @@ def handle_update_profile():
             }), 400
         id
         update_username = data['username']
+        for k , v in posts.items():
+            if v['userId'] == user["id"]:
+                v['username'] = update_username     
+        for i in COMMENTS.values():
+            print(i)
+            comments = i['comments'] # list of comment
+            for comment in comments:
+                if comment['userId'] == user['id']:
+                    comment['username'] = update_username
+
         update_bio = data['bio']
         new_user = {
             "username":update_username,"password":user['password'],'id':user['id'],'bio':update_bio,'email':user['email']
@@ -186,7 +196,12 @@ def handle_update_profile():
         users[user['email']] = new_user
         return jsonify({
             "status":"success",
-            "data":new_user
+            "data":{
+                "username":update_username,
+                'id':user['id'],
+                'bio':update_bio,
+                'email':user['email']
+            }
         })
     else:
         return jsonify({'status':"fail", "data":"Token missmatch"})
@@ -237,7 +252,6 @@ def handle_post():
             posts[id] = {
                 "id" :id,
                 "userid":userid,
-                "username":username,
                 "text":text
             }
             return jsonify({
@@ -250,6 +264,13 @@ def handle_post():
                 }
             }),200
     else:
+    #     str(uuid.uuid3(uuid.NAMESPACE_DNS, user_uuid + "This is my second post")): {
+    #     "userId": user_uuid,
+    #     "username": "Dummy", 
+    #     "text": "This is my second post",
+    #     "id": str(uuid.uuid3(uuid.NAMESPACE_DNS, user_uuid + "This is my second post"))
+    # },
+
         return jsonify({
             "status":"success",
             "data":list(posts.values())
@@ -278,20 +299,22 @@ def handle_comment(postId):
                     "data": "Invalid JSON format in request body."
                 }), 400 
             text = data['text']
-            userId = data['userId']
-            username = data['username']
+            user_email = user_session[token]
+            user = users[user_email]
+            username = user['username']
+            userId = user['id']
             postId = postId
             id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userId+"comment"+text))
-            current_post = comments.get(postId,None)
+            current_post = COMMENTS.get(postId,None)
             if current_post:
-                comments[postId]['comments'].append({
+                COMMENTS[postId]['comments'].append({
                     "userId":userId,
                     "username":username,
                     'text':text,
                     'id':id
                 })
             else:
-                comments[postId] ={
+                COMMENTS[postId] ={
                     "comments":[
                         {
                     "userId":userId,
@@ -312,11 +335,11 @@ def handle_comment(postId):
 
     else:
 
-        current_post = comments.get(postId,None)
+        current_post = COMMENTS.get(postId,None)
         if current_post:
             return jsonify({
             "status":"success",
-            "data":comments[postId]['comments']
+            "data":COMMENTS[postId]['comments']
         })
         return jsonify({
             "status":"success",

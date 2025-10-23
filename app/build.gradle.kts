@@ -70,6 +70,10 @@ dependencies {
     implementation("androidx.navigation3:navigation3-ui-android:1.0.0-alpha10")
     implementation("androidx.lifecycle:lifecycle-viewmodel-navigation3:2.10.0-alpha04")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+    implementation("androidx.work:work-runtime-ktx:2.10.5")
+    implementation("io.coil-kt.coil3:coil-compose:3.3.0")
+    implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

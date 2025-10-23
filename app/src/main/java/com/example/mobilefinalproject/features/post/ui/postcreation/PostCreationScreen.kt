@@ -144,7 +144,7 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit,) {
                 ) {
                     Button(
                         onClick = {
-                            postCreationViewModel.onAIModifyPostSubmit(currentUser?.username!!, currentUser?.id!!)
+                            postCreationViewModel.onAIModifyPostSubmit(username = currentUser?.username!!, userId=currentUser?.id!!)
                         },
                         // Remove .fillMaxWidth() from the button
                         // Optional: Add padding here if needed
