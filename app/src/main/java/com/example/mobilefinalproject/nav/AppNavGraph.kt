@@ -56,6 +56,7 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
             entry<Profile> {
                 ProfileScreen(
                     modifier = modifier,
+                    userId = it.id
                 )
             }
             entry<PostList> {
@@ -89,8 +90,12 @@ fun AppNavGraph(modifier: Modifier = Modifier) {
                 CommentListScreen(
                     modifier = modifier,
                     postId = it.postId,
+                    userId = it.userId,
                     post = it.post,
-                    username = it.username
+                    username = it.username,
+                    onViewUserProfileClicked = { userId ->
+                        backStack.add(Profile(userId))
+                    }
                 )
             }
         },

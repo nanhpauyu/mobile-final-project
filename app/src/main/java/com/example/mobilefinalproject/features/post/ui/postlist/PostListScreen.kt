@@ -189,6 +189,7 @@ fun PostListScreen(
                                     onCommentClick(
                                         CommentList(
                                             postId = it.id,
+                                            userId = it.userId,
                                             username = it.username,
                                             post = it.text
                                         )

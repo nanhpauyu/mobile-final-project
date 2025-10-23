@@ -1,5 +1,6 @@
 package com.example.mobilefinalproject.features.profile.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -58,22 +59,28 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: String? = null) {
 
     val editDialog = rememberSaveable { mutableStateOf(false) }
 
+    Log.i("ProfileScreen", "userId: $userId")
+    Log.i("ProfileScreen", "currentUser: ${currentUser?.id}")
     LaunchedEffect(userId, currentUser?.id) {
+        Log.i("ProfileScreen.effect", "userId: $userId")
+        Log.i("ProfileScreen.effect", "currentUser: ${currentUser?.id}")
         profileViewModel.getProfileById(userId ?: currentUser?.id!!)
     }
 
     Scaffold (
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    profileViewModel.setEditProfile()
-                    editDialog.value = true
+            if (currentUser != null && currentUser!!.id == profileUiState.id) {
+                FloatingActionButton(
+                    onClick = {
+                        profileViewModel.setEditProfile()
+                        editDialog.value = true
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "edit"
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = "edit"
-                )
             }
         }
     ){ innerPadding ->

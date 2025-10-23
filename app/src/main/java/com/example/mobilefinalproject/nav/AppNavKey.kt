@@ -21,4 +21,4 @@ data object PostList: AppNavKey
 data object AddPost: AppNavKey
 
 @Serializable
-data class CommentList(val postId: String, val username: String, val post: String): AppNavKey
+data class CommentList(val postId: String, val userId: String, val username: String, val post: String): AppNavKey

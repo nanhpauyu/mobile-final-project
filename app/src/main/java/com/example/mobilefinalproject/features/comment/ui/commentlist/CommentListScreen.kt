@@ -1,5 +1,6 @@
 package com.example.mobilefinalproject.features.comment.ui.commentlist
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -54,14 +55,20 @@ import com.example.mobilefinalproject.features.comment.data.repository.CommentRe
 fun CommentListScreen(
     modifier: Modifier = Modifier,
     postId: String,
+    userId: String,
     post: String,
-    username: String
+    username: String,
+    onViewUserProfileClicked: (userId: String) -> Unit
 ) {
     val context = LocalContext.current
     val appState: AppState = AppStateProvider.getAppState(context)
     val currentUser by appState.currentUser.collectAsStateWithLifecycle()
     val commentAPIService: CommentAPIService = remember {
         ApiProvider.getCommentAPIService(context)
+    }
+    val _onViewUserProfileClicked = { userId: String ->
+        Log.i("onViewProfileClicked", "userId: $userId")
+        onViewUserProfileClicked(userId)
     }
     val commentListViewModel: CommentListViewModel = viewModel {
         CommentListViewModel(
@@ -116,7 +123,7 @@ fun CommentListScreen(
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
-
+                        _onViewUserProfileClicked(userId)
                     },
                 contentAlignment = Alignment.TopStart
             ) {
@@ -153,6 +160,9 @@ fun CommentListScreen(
                                 shape = RoundedCornerShape(4.dp)
                             )
                             .padding(8.dp)
+                            .clickable {
+                                _onViewUserProfileClicked(it.userId)
+                            },
                     ) {
                         Row(
                             modifier = Modifier
