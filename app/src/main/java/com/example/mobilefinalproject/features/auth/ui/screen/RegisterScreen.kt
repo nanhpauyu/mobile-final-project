@@ -56,7 +56,6 @@ fun RegisterScreen(
     }
 
     LaunchedEffect(currentUser) {
-        Log.i("RegisterScreen", "currentUser: $currentUser")
         if (currentUser != null) {
             onRegisterSuccess()
         }

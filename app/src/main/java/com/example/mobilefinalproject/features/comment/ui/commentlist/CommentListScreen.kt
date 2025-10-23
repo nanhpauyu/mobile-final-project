@@ -66,10 +66,6 @@ fun CommentListScreen(
     val commentAPIService: CommentAPIService = remember {
         ApiProvider.getCommentAPIService(context)
     }
-    val _onViewUserProfileClicked = { userId: String ->
-        Log.i("onViewProfileClicked", "userId: $userId")
-        onViewUserProfileClicked(userId)
-    }
     val commentListViewModel: CommentListViewModel = viewModel {
         CommentListViewModel(
             commentRepository = CommentRepositoryImpl(
@@ -123,7 +119,7 @@ fun CommentListScreen(
                         shape = RoundedCornerShape(4.dp)
                     )
                     .clickable {
-                        _onViewUserProfileClicked(userId)
+                        onViewUserProfileClicked(userId)
                     },
                 contentAlignment = Alignment.TopStart
             ) {
@@ -161,7 +157,7 @@ fun CommentListScreen(
                             )
                             .padding(8.dp)
                             .clickable {
-                                _onViewUserProfileClicked(it.userId)
+                                onViewUserProfileClicked(it.userId)
                             },
                     ) {
                         Row(

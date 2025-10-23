@@ -59,11 +59,7 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: String? = null) {
 
     val editDialog = rememberSaveable { mutableStateOf(false) }
 
-    Log.i("ProfileScreen", "userId: $userId")
-    Log.i("ProfileScreen", "currentUser: ${currentUser?.id}")
     LaunchedEffect(userId, currentUser?.id) {
-        Log.i("ProfileScreen.effect", "userId: $userId")
-        Log.i("ProfileScreen.effect", "currentUser: ${currentUser?.id}")
         profileViewModel.getProfileById(userId ?: currentUser?.id!!)
     }
 
