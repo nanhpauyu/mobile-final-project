@@ -34,7 +34,7 @@ import com.example.mobilefinalproject.core.data.network.ApiProvider
 import com.example.mobilefinalproject.features.post.data.repository.PostRepositoryImpl
 
 @Composable
-fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
+fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit,) {
     val context = LocalContext.current
     Scaffold { innerPadding ->
         Column(
@@ -60,6 +60,8 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
             }
             val postCreationUIState by postCreationViewModel.postCreationUIState.collectAsStateWithLifecycle()
             val aiPostCreationUIState by postCreationViewModel.aiPostCreationUIState.collectAsStateWithLifecycle()
+
+
 
             Spacer(modifier = Modifier.padding(10.dp))
             Text(
@@ -108,7 +110,7 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
                 Button(
                     modifier = Modifier.size(width = 150.dp, height = 50.dp),
                     onClick = {
-                        postCreationViewModel.onPostSubmit(currentUser?.username!!, currentUser?.id!!)
+                        postCreationViewModel.onPostSubmit(username=currentUser?.username!!, userId =  currentUser?.id!!)
                     }
                 ) {
                     Text(
@@ -166,7 +168,9 @@ fun PostCreationScreen(modifier: Modifier = Modifier, onSuccess: () -> Unit) {
             LaunchedEffect(
                 postCreationUIState.onSuccessUpload
             ) {
-                onSuccess()
+                if(postCreationUIState.onSuccessUpload == true){
+                    onSuccess()
+                }
             }
         }
     }

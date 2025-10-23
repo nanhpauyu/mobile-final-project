@@ -25,7 +25,7 @@ class CommentCreateViewModel(
         }
     }
 
-    fun resetCreateCommentUIState() = _commentCreateUIState.update { CommentCreateUIState.EMPTY }
+    fun resetCreateCommentUIState() = _commentCreateUIState.update { it.copy(text="", isSuccess = null, isLoading = false) }
 
     fun createComment(userId:String, username:String) {
         viewModelScope.launch {

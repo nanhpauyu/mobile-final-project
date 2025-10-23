@@ -20,8 +20,8 @@ object ApiProvider {
 
                 retrofit = Retrofit.Builder()
 //                    .baseUrl("http://localhost:8080/")
-                    .baseUrl("https://0d12602c3b68.ngrok-free.app/")
-//                    .baseUrl("http://localhost:5000/")
+//                    .baseUrl("https://0d12602c3b68.ngrok-free.app/")
+                    .baseUrl("http://localhost:5000/")
                     .client(client)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
