@@ -9,10 +9,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material3.Card
 import androidx.compose.material3.AlertDialogDefaults
 import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -68,8 +71,8 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: String? = null) {
                 }
             ) {
                 Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "add"
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "edit"
                 )
             }
         }
@@ -79,21 +82,26 @@ fun ProfileScreen(modifier: Modifier = Modifier, userId: String? = null) {
                 .padding(innerPadding)
                 .fillMaxWidth(),
         ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = "Profile Detail",
-                fontWeight = FontWeight.Bold,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize
-            )
-            Text(text = "Username: ${profileUiState.username}")
-            Text(text = "Email: ${profileUiState.email}")
-            Text(text = "Bio: ${profileUiState.bio}")
-            when {
-                editProfileUiState.isLoading -> {
-                    LinearProgressIndicator()
-                }
-                editProfileUiState.errorMessage != null -> {
-                    Text(text = "Error: ${editProfileUiState.errorMessage}")
+            Card(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                        text = "Profile Detail",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = MaterialTheme.typography.titleLarge.fontSize
+                    )
+                    HorizontalDivider()
+                    Text(text = "Username: ${profileUiState.username}")
+                    Text(text = "Email: ${profileUiState.email}")
+                    Text(text = "Bio: ${profileUiState.bio}")
+                    when {
+                        editProfileUiState.isLoading -> {
+                            LinearProgressIndicator()
+                        }
+                        editProfileUiState.errorMessage != null -> {
+                            Text(text = "Error: ${editProfileUiState.errorMessage}")
+                        }
+                    }
                 }
             }
         }
