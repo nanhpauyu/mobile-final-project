@@ -8,6 +8,5 @@ data class ProfileDataDto(
     val bio: String,
     val email: String,
     val id: String,
-    val password: String,
     val username: String
 )

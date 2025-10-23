@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.google.gms.google.services)
     kotlin("plugin.serialization") version "2.2.20"
+
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -70,6 +72,9 @@ dependencies {
     implementation("androidx.navigation3:navigation3-ui-android:1.0.0-alpha10")
     implementation("androidx.lifecycle:lifecycle-viewmodel-navigation3:2.10.0-alpha04")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.9.0")
+
+    // test coroutine
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
