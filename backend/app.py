@@ -22,7 +22,7 @@ id_to_user_email = {
 user_session ={} # {uuid: email}
 
 user_uuid = str(uuid.uuid3(uuid.NAMESPACE_DNS, "Dummy"))
-posts = {
+POSTS = {
     str(uuid.uuid3(uuid.NAMESPACE_DNS, user_uuid + "This is my first post")): {
         "userId": user_uuid,
         "username": "Dummy",
@@ -179,7 +179,9 @@ def handle_update_profile():
             }), 400
         id
         update_username = data['username']
-        for k , v in posts.items():
+        print(POSTS)
+        for k , v in POSTS.items():
+            print((k,v))
             if v['userId'] == user["id"]:
                 v['username'] = update_username     
         for i in COMMENTS.values():
@@ -247,18 +249,23 @@ def handle_post():
             text = data['text']
             userid = data['userid']
             print(userid)
-            username = data['username']
+            user_email = user_session[token]
+            user = users[user_email]
+            username = user['username']
             id = str(uuid.uuid3(uuid.NAMESPACE_DNS,userid+text))
-            posts[id] = {
+            print(id)
+            POSTS[id] = {
                 "id" :id,
-                "userid":userid,
+                "userId":userid,
+                'username':username,
                 "text":text
             }
+            print(POSTS[id])
             return jsonify({
                 "status": "success",
                 "data": {
                     "username":username,
-                    "userid":userid,
+                    "userId":userid,
                     "text":text,
                     "id":id
                 }
@@ -273,7 +280,7 @@ def handle_post():
 
         return jsonify({
             "status":"success",
-            "data":list(posts.values())
+            "data":list(POSTS.values())
         })
 
 
