@@ -10,6 +10,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,6 +79,7 @@ fun LoginScreen(
                 value = authUiState.email,
                 onValueChange = authViewModel::onEmailChange,
                 label = { Text("Email") },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
             )
             OutlinedTextField(
                 value = authUiState.password,
