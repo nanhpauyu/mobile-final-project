@@ -74,7 +74,7 @@ Dto
 
 |Dto| Field | Type |
 |--| --| -- |
-|AuthLoginDto| Field | Type |
+|AuthLoginDto| | |
 |  | email | String | 
 |  | password | String | 
 |AuthRegisterDto|  |  |
